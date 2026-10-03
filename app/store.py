@@ -14,6 +14,12 @@ CREATE TABLE IF NOT EXISTS findings (id TEXT PRIMARY KEY, case_id TEXT, evidence
 CREATE TABLE IF NOT EXISTS decisions (id INTEGER PRIMARY KEY AUTOINCREMENT, case_id TEXT, actor TEXT, action TEXT, detail TEXT, created_at REAL);
 CREATE TABLE IF NOT EXISTS adjustments (id TEXT PRIMARY KEY, case_id TEXT, idempotency_key TEXT, amount TEXT, reason TEXT, evidence_version INTEGER, created_at REAL, UNIQUE(case_id, idempotency_key));
 CREATE TABLE IF NOT EXISTS agent_runs (id TEXT PRIMARY KEY, case_id TEXT, evidence_version INTEGER, trace TEXT, created_at REAL);
+CREATE INDEX IF NOT EXISTS idx_evidence_case ON evidence(case_id);
+CREATE INDEX IF NOT EXISTS idx_calculations_case ON calculations(case_id);
+CREATE INDEX IF NOT EXISTS idx_findings_case ON findings(case_id);
+CREATE INDEX IF NOT EXISTS idx_decisions_case ON decisions(case_id);
+CREATE INDEX IF NOT EXISTS idx_adjustments_case ON adjustments(case_id);
+CREATE INDEX IF NOT EXISTS idx_agent_runs_case ON agent_runs(case_id);
 """
 
 @contextmanager

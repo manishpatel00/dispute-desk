@@ -24,6 +24,7 @@ UI (static/index.html) -> FastAPI (app/main.py) -> SQLite (app/store.py)
 - **Partial tool failure**: if calculation fails the run stops and reports it (no guessed numbers); if the LLM fails/times out/returns ungrounded output, the run falls back to rule-based findings and the UI says so.
 - **Reopen + staleness**: new evidence creates evidence version N+1, status `reopened`; findings and calculations from older versions are flagged *stale* until the investigation is re-run.
 - **Audit trail**: `decisions` (every accept/edit/reject/credit/info-request), `evidence` (all versions), `agent_runs` (node trace). Structured JSON logs to stdout.
+- **Design System**: Fully documented in [`DESIGN.md`](./DESIGN.md) following the **Together AI / VoltAgent** specification (near-black `#010120` hero, 3-stop gradient ribbon `#fc4c02` → `#ef2cc1` → `#bdbbff`, crisp white canvas, hairline borders, uppercase monospace eyebrows and buttons, and canonical 4px radius).
 
 ## Testing
 115 tests, 99% line coverage, repeated runs stable. Layers:

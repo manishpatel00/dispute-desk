@@ -1,66 +1,864 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dispute Desk — billing investigation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Together AI-grade billing dispute investigation and resolution infrastructure. Deterministic recalculation with AI interpretation and human approval.">
+<title>Dispute Desk — Deterministic Billing Resolution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eef1f4;--panel:#fff;--ink:#14213d;--muted:#5b6678;--line:#d5dbe3;--bad:#b3261e;--ok:#1b6b4a;--warn:#8a5a00;--accent:#1f4fd8;--stale:#6b4fa3}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1520;--panel:#171f2e;--ink:#e8edf6;--muted:#9aa6bb;--line:#2a3548;--bad:#ff8a80;--ok:#6fd1a2;--warn:#f0c36b;--accent:#8fb0ff;--stale:#c0a8ff}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Public Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums}
-header{padding:20px 28px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
-h1{font:700 26px "Source Serif 4",Georgia,serif;margin:0}h2{font:700 18px "Source Serif 4",Georgia,serif;margin:0 0 10px}
-main{display:grid;grid-template-columns:260px 1fr;gap:20px;padding:20px 28px;max-width:1280px;margin:auto}
-@media(max-width:860px){main{grid-template-columns:1fr;padding:16px}}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px;margin-bottom:16px}
-button{font:inherit;padding:7px 12px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:4px;cursor:pointer}
-button.ghost{background:transparent;color:var(--ink);border-color:var(--line)}button:disabled{opacity:.5;cursor:wait}
-button:focus-visible,input:focus-visible,textarea:focus-visible,li:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-input,textarea{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--ink);width:100%}
-table{width:100%;border-collapse:collapse}th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right}th:first-child,td:first-child{text-align:left}
-th{font-weight:500;color:var(--muted);font-size:13px}.bad{color:var(--bad);font-weight:700}.ok{color:var(--ok)}
-.tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;border:1px solid var(--line);margin-right:4px}
-.stale{color:var(--stale);border-color:var(--stale)}.calc{color:var(--bad);border-color:var(--bad)}.amb{color:var(--warn);border-color:var(--warn)}
-ul.cases{list-style:none;margin:0;padding:0}ul.cases li{padding:8px;border-bottom:1px solid var(--line);cursor:pointer}ul.cases li[aria-current=true]{background:var(--bg);font-weight:700}
-.finding{border-left:4px solid var(--line);padding:6px 12px;margin:10px 0}.finding.calculation_error{border-color:var(--bad)}.finding.contract_ambiguity{border-color:var(--warn)}.finding.stale{opacity:.7}
-.cite{color:var(--muted);font-size:13px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-#msg{position:sticky;top:0;padding:10px 16px;margin:0 0 12px;border-radius:4px;display:none}#msg.err{display:block;background:var(--bad);color:#fff}#msg.good{display:block;background:var(--ok);color:#fff}
-.muted{color:var(--muted)}pre{white-space:pre-wrap;font-size:12px}
-</style></head><body>
-<header><h1>Dispute Desk</h1><span class="muted">Deterministic recalculation · AI interpretation · human approval</span></header>
-<main>
-<aside><div class="panel"><h2>Cases</h2><div class="row"><button id="load">Load sample case</button></div><ul class="cases" id="cases" role="list"></ul><p id="emptyCases" class="muted">No cases yet. Load the sample to begin.</p></div></aside>
-<section><div id="msg" role="status" aria-live="polite"></div><div id="detail"><div class="panel muted">Select or create a case.</div></div></section>
+:root {
+  --primary: #000000;
+  --accent-orange: #fc4c02;
+  --accent-magenta: #ef2cc1;
+  --accent-periwinkle: #bdbbff;
+  --accent-mint: #c8f6f9;
+  --canvas: #ffffff;
+  --hairline: #ebebeb;
+  --canvas-dark: #010120;
+  --surface-dark-soft: #171b26;
+  --hairline-dark: #26263a;
+  --ink: #000000;
+  --body: #666666;
+  --on-dark: #ffffff;
+  --bad: #b3261e;
+  --ok: #1b6b4a;
+  --warn: #8a5a00;
+  --stale: #6b4fa3;
+  --rounded-sm: 4px;
+  --rounded-xs: 3.25px;
+  --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font: 15px/1.55 var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+a.skip {
+  position: absolute;
+  top: -40px;
+  left: 12px;
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  z-index: 1000;
+  border-radius: var(--rounded-sm);
+  transition: top 0.2s;
+}
+a.skip:focus { top: 12px; }
+
+/* ─── Hero Band (Canvas Dark #010120) ─── */
+.hero-band {
+  background: var(--canvas-dark);
+  color: var(--on-dark);
+  padding: 48px 32px 56px;
+  border-bottom: 1px solid var(--hairline-dark);
+  position: relative;
+  overflow: hidden;
+}
+.hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 920px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-ribbon-col { display: none; }
+}
+
+.mono-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-mint);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mono-eyebrow-dark {
+  color: var(--body);
+}
+
+.hero-title {
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  margin: 0 0 16px;
+  color: var(--on-dark);
+}
+
+.hero-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #a3a8b8;
+  max-width: 640px;
+  margin: 0 0 24px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ─── Ribbon Graphic (Signature Brand Gradient) ─── */
+.ribbon-svg {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  filter: drop-shadow(0 0 40px rgba(239, 44, 193, 0.25));
+}
+
+/* ─── Buttons ─── */
+button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 9px 18px;
+  border-radius: var(--rounded-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+button:focus-visible {
+  outline: 2px solid var(--accent-magenta);
+  outline-offset: 2px;
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+/* Button Variants */
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+.btn-primary:hover:not(:disabled) {
+  background: #222222;
+  border-color: #222222;
+}
+
+.btn-mint {
+  background: var(--accent-mint);
+  color: #000000;
+  border-color: var(--accent-mint);
+}
+.btn-mint:hover:not(:disabled) {
+  background: #b2eef2;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--hairline);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: #f7f7f7;
+  border-color: #d1d1d1;
+}
+
+.btn-ghost-on-dark {
+  background: var(--surface-dark-soft);
+  color: var(--on-dark);
+  border-color: var(--hairline-dark);
+}
+.btn-ghost-on-dark:hover:not(:disabled) {
+  background: #252b3b;
+}
+
+/* ─── Layout Workspace ─── */
+main {
+  max-width: 1280px;
+  margin: 32px auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+}
+@media (max-width: 860px) {
+  main {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+    margin: 20px auto;
+  }
+}
+
+/* ─── Cards & Panels ─── */
+.panel {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+.panel-header h2 {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+/* ─── Case Pipeline Sidebar ─── */
+ul.cases {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+ul.cases li {
+  padding: 12px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: var(--canvas);
+}
+ul.cases li:hover {
+  background: #fafafa;
+  border-color: #d1d1d1;
+}
+ul.cases li[aria-current="true"] {
+  border-color: var(--primary);
+  background: #fcfcfc;
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+.case-id {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+}
+.case-meta {
+  color: var(--body);
+  font-size: 12px;
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ─── Badges & Tags ─── */
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: var(--rounded-sm);
+  border: 1px solid var(--hairline);
+  background: #ffffff;
+  color: var(--body);
+}
+.tag.status-open {
+  border-color: var(--accent-periwinkle);
+  color: #3b3bbb;
+  background: #f4f4ff;
+}
+.tag.status-under_review {
+  border-color: var(--warn);
+  color: var(--warn);
+  background: #fff8eb;
+}
+.tag.status-resolved {
+  border-color: var(--ok);
+  color: var(--ok);
+  background: #f0f9f4;
+}
+.tag.status-awaiting_info {
+  border-color: #888888;
+  color: #444444;
+  background: #f5f5f5;
+}
+.tag.calc {
+  border-color: var(--bad);
+  color: var(--bad);
+  background: #fff3f2;
+}
+.tag.amb {
+  border-color: var(--warn);
+  color: var(--warn);
+  background: #fff8eb;
+}
+.tag.stale {
+  border-color: var(--stale);
+  color: var(--stale);
+  background: #f6f0ff;
+}
+
+/* ─── Data Tables (Technical Invoice Spec) ─── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 12px 0;
+}
+th {
+  background: var(--hairline);
+  color: #333333;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 12px;
+  text-align: right;
+  border-bottom: 1px solid #dedede;
+}
+th:first-child, td:first-child { text-align: left; }
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--hairline);
+  text-align: right;
+}
+tr:hover td { background: #fafafa; }
+.bad { color: var(--bad); font-weight: 600; }
+.ok { color: var(--ok); font-weight: 500; }
+
+/* ─── Finding Cards ─── */
+.finding {
+  border: 1px solid var(--hairline);
+  border-left: 4px solid var(--body);
+  border-radius: var(--rounded-sm);
+  padding: 14px 16px;
+  margin: 12px 0;
+  background: var(--canvas);
+}
+.finding.calculation_error {
+  border-left-color: var(--bad);
+  background: #fffbfb;
+}
+.finding.contract_ambiguity {
+  border-left-color: var(--warn);
+  background: #fffcf5;
+}
+.finding-statement {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 8px 0;
+}
+.cite {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--body);
+  margin-top: 6px;
+}
+
+/* ─── Form Inputs ─── */
+input, textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  background: var(--canvas);
+  color: var(--ink);
+  width: 100%;
+  transition: border-color 0.15s ease;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+textarea {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  resize: vertical;
+}
+
+/* ─── Notifications & Status Bar ─── */
+#msg {
+  position: sticky;
+  top: 16px;
+  padding: 12px 18px;
+  margin: 0 0 16px;
+  border-radius: var(--rounded-sm);
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  z-index: 100;
+}
+#msg.err {
+  display: block;
+  background: #fdf2f2;
+  color: var(--bad);
+  border: 1px solid var(--bad);
+}
+#msg.good {
+  display: block;
+  background: #f0fdf4;
+  color: var(--ok);
+  border: 1px solid var(--ok);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.muted { color: var(--body); font-size: 13px; }
+
+/* ─── Spinner ─── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* ─── Empty State ─── */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--body);
+}
+.empty-state svg {
+  width: 44px;
+  height: 44px;
+  stroke: #cccccc;
+  margin-bottom: 12px;
+}
+
+/* ─── Terminal Wordmark Banner ─── */
+.footer-wordmark-banner {
+  margin-top: 60px;
+  padding: 30px 32px 40px;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+  overflow: hidden;
+  user-select: none;
+}
+.wordmark-text {
+  font-family: var(--font-sans);
+  font-size: clamp(48px, 11vw, 130px);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  color: #f0f0f0;
+  text-transform: lowercase;
+}
+.footer-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #999999;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 12px;
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip">Skip to main content</a>
+
+<!-- ─── Hero Band (Dark #010120) with Signature Gradient Ribbon ─── -->
+<header class="hero-band" role="banner">
+  <div class="hero-inner">
+    <div>
+      <div class="mono-eyebrow">
+        <span>● SYSTEM ACTIVE</span>
+        <span>·</span>
+        <span>DETERMINISTIC ENGINE V1.0</span>
+      </div>
+      <h1 class="hero-title">Deterministic billing dispute resolution.</h1>
+      <p class="hero-lead">
+        Auditing discrepancies with Decimal arithmetic. Multi-agent semantic interpretation grounded in contract citations, governed by human verification.
+      </p>
+      <div class="hero-actions">
+        <button id="load" class="btn-mint">LOAD SAMPLE CASE</button>
+        <span class="mono-eyebrow mono-eyebrow-dark" style="margin-bottom:0">ZERO FLOAT DISCREPANCIES · IDEMPOTENT SETTLEMENT</span>
+      </div>
+    </div>
+    <div class="hero-ribbon-col">
+      <!-- Signature Together AI 3-color brand gradient ribbon SVG -->
+      <svg class="ribbon-svg" viewBox="0 0 460 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fc4c02" />
+            <stop offset="50%" stop-color="#ef2cc1" />
+            <stop offset="100%" stop-color="#bdbbff" />
+          </linearGradient>
+          <linearGradient id="brandGradSubtle" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ef2cc1" stop-opacity="0.4" />
+            <stop offset="100%" stop-color="#fc4c02" stop-opacity="0.1" />
+          </linearGradient>
+        </defs>
+        <path d="M20,180 C120,220 200,60 300,90 C380,114 410,30 440,50 C410,130 330,190 250,150 C170,110 90,190 20,180 Z" fill="url(#brandGradSubtle)" />
+        <path d="M10,150 C100,70 190,180 280,120 C360,60 400,140 450,90 C390,160 310,190 230,140 C150,90 80,190 10,150 Z" fill="url(#brandGrad)" opacity="0.9" />
+        <path d="M40,110 C140,40 210,150 310,80 C370,30 410,90 440,70" stroke="#c8f6f9" stroke-width="2" stroke-dasharray="4 4" opacity="0.6" />
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ─── Main Technical Workspace ─── -->
+<main id="main-content">
+  <!-- Sidebar -->
+  <aside role="complementary" aria-label="Cases Pipeline">
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Cases Pipeline</h2>
+        <span class="tag">AUDITED</span>
+      </div>
+      <div id="emptyCases" class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+          <path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <p class="muted">No cases active.<br>Click "LOAD SAMPLE CASE" above.</p>
+      </div>
+      <ul class="cases" id="cases" role="list" aria-label="Dispute cases"></ul>
+    </div>
+  </aside>
+
+  <!-- Detail Area -->
+  <section role="main" aria-label="Investigation Console">
+    <div id="msg" role="status" aria-live="polite"></div>
+    <div id="detail">
+      <div class="panel empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+          <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+        </svg>
+        <p class="muted">Select a case or click "LOAD SAMPLE CASE" to begin investigation.</p>
+      </div>
+    </div>
+  </section>
 </main>
+
+<!-- ─── Terminal Wordmark Banner ─── -->
+<footer class="footer-wordmark-banner">
+  <div class="wordmark-text">dispute.desk</div>
+  <div class="footer-sub">DETERMINISTIC BILLING AGENT · TOGETHER AI SPECIFICATION · VERIFIED IDEMPOTENCY</div>
+</footer>
+
 <script>
-const $=s=>document.querySelector(s);let cur=null;
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function say(t,ok){const m=$("#msg");m.className=ok?"good":"err";m.textContent=t;if(ok)setTimeout(()=>m.className="",3500)}
-async function api(p,o={}){const r=await fetch("/api"+p,{headers:{"Content-Type":"application/json"},...o,body:o.body?JSON.stringify(o.body):undefined});
- const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(typeof j.detail==="string"?j.detail:"Request failed ("+r.status+")");return j}
-async function guard(btn,fn){if(btn)btn.disabled=true;try{await fn()}catch(e){say(e.message)}finally{if(btn)btn.disabled=false}}
-async function loadCases(){const cs=await api("/cases");$("#emptyCases").hidden=cs.length>0;
- $("#cases").innerHTML=cs.map(c=>`<li tabindex="0" data-id="${esc(c.id)}" ${c.id===cur?'aria-current="true"':""}>${esc(c.id)}<br><span class="muted">${esc(c.customer)} · ${esc(c.status)}</span></li>`).join("");
- document.querySelectorAll("#cases li").forEach(li=>{li.onclick=()=>open(li.dataset.id);li.onkeydown=e=>{if(e.key==="Enter")open(li.dataset.id)}})}
-$("#load").onclick=e=>guard(e.target,async()=>{const p=await api("/sample");const r=await api("/cases",{method:"POST",body:{payload:p}});await loadCases();await open(r.id);say("Sample case created",1)});
-async function open(id){cur=id;await loadCases();const d=await api("/cases/"+id);render(d)}
-function render(d){const c=d.calculation||d.calc,L=c?c.lines:[],f=d.findings;
- const cmp=c?`<table><tr><th>Line</th><th>Billed qty</th><th>Valid qty</th><th>Billed</th><th>Recalculated</th><th>Δ</th></tr>${L.map(l=>`<tr><td>${esc(l.line_id)} ${esc(l.metric)} ${l.flags.map(x=>`<span class="tag ${["AMBIGUOUS_RULE","MISSING_USAGE","CALC_ERROR"].includes(x)?"amb":"calc"}">${esc(x)}</span>`).join("")}</td><td>${esc(l.billed_qty)}</td><td>${esc(l.correct_qty)}</td><td>${esc(l.billed_amount)}</td><td>${esc(l.correct_amount)}</td><td class="${+l.delta?"bad":"ok"}">${esc(l.delta)}</td></tr>`).join("")}
- <tr><th>Total</th><th></th><th></th><th>${esc(c.original_total)}</th><th>${esc(c.recalculated_total)}</th><th>${esc(c.overbilled)}</th></tr></table><p class="muted">Calculated by deterministic code from evidence v${c.evidence_version}. Already credited: ${esc(c.already_credited)} · ${+c.unresolved_ambiguous?`<span class="tag amb">held for contract interpretation: ${esc(c.unresolved_ambiguous)}</span> `:""}Credited in app: ${esc(c.credited_in_app)} · Creditable now: <b>${esc(c.creditable_now)}</b>${c.partial?' · <span class="tag amb">partial result: '+c.errors.map(esc).join(", ")+' failed</span>':""}</p>`:`<p class="muted">Not investigated yet.</p>`;
- $("#detail").innerHTML=`<div class="panel"><div class="row"><h2 style="margin:0">${esc(d.case.id)} — ${esc(d.case.customer)}</h2><span class="tag">${esc(d.case.status)}</span>${d.calc_stale?'<span class="tag stale">calculation stale — re-run</span>':""}</div>
- <p>${esc(d.current.payload.dispute_text)}</p><div class="row"><button id="inv">${c?"Re-run investigation":"Investigate"}</button><span class="muted">Evidence v${d.current.version}</span></div></div>
- <div class="panel"><h2>Original vs recalculated invoice</h2>${cmp}</div>
- <div class="panel"><h2>Findings</h2>${f.length?f.map(x=>`<div class="finding ${esc(x.kind)} ${x.stale?"stale":""}"><span class="tag ${x.kind==="calculation_error"?"calc":x.kind==="contract_ambiguity"?"amb":""}">${esc(x.kind.replace("_"," "))}</span><span class="tag">${esc(x.source)}</span><span class="tag">${esc(x.status)}</span>${x.stale?'<span class="tag stale">stale: evidence changed since v'+x.evidence_version+'</span>':""}
- <div>${esc(x.statement)}</div><div class="cite">Cites: ${x.citations.map(esc).join(", ")}</div>
- <div class="row" style="margin-top:6px"><button class="ghost" data-a="accepted" data-f="${esc(x.id)}">Accept</button><button class="ghost" data-a="edited" data-f="${esc(x.id)}" data-s="${esc(x.statement)}">Edit</button><button class="ghost" data-a="rejected" data-f="${esc(x.id)}">Reject</button></div></div>`).join(""):'<p class="muted">No findings yet. Run the investigation.</p>'}</div>
- <div class="panel"><h2>Resolution (mock credit)</h2><div class="row"><input id="amt" style="width:140px" aria-label="Credit amount" value="${c?esc(c.creditable_now):"0.00"}"><input id="why" placeholder="Reason (required)" aria-label="Reason" style="flex:1"><button id="credit">Approve credit</button><button class="ghost" id="ask">Request info</button></div><p class="muted">Duplicate submissions are ignored; credits above recalculated overbilling are blocked.</p>
- ${d.adjustments.map(a=>`<div class="ok">${esc(a.id)}: ${esc(a.amount)} (evidence v${a.evidence_version})${a.stale?' <span class="tag stale">approved on earlier evidence</span>':""}</div>`).join("")}</div>
- <div class="panel"><h2>Add evidence (reopens case)</h2><textarea id="patch" rows="4" aria-label="Evidence JSON" placeholder='{"usage":[{"id":"U9","metric":"api_calls","quantity":"1000","date":"2026-09-12"}]}'></textarea><div class="row" style="margin-top:6px"><input id="note" placeholder="Note (e.g. customer usage export)" style="flex:1"><button id="addev">Add evidence</button></div></div>
- <div class="panel"><h2>History</h2>${d.decisions.map(x=>`<div class="muted">${new Date(x.created_at*1000).toLocaleString()} · ${esc(x.actor)} · ${esc(x.action)} ${esc(x.detail==="{}"?"":x.detail)}</div>`).join("")}</div>`;
- $("#inv").onclick=e=>guard(e.target,async()=>{const r=await api(`/cases/${cur}/investigate`,{method:"POST"});say(r.ok?`Investigation complete (${r.llm_used?"AI":"rule-based"} interpretation${r.llm_error?" — AI unavailable: "+r.llm_error:""})`:"Calculation failed: "+r.error,r.ok);await open(cur)});
- document.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>guard(b,async()=>{let s;if(b.dataset.a==="edited"){s=prompt("Edit finding",b.dataset.s);if(!s)return}await api(`/cases/${cur}/findings/${b.dataset.f}`,{method:"POST",body:{status:b.dataset.a,statement:s}});await open(cur)}));
- $("#credit").onclick=e=>guard(e.target,async()=>{const key=sessionStorage.getItem("k"+cur+$("#amt").value)||("ui-"+crypto.randomUUID());sessionStorage.setItem("k"+cur+$("#amt").value,key);
-  const r=await api(`/cases/${cur}/credit`,{method:"POST",body:{amount:$("#amt").value,reason:$("#why").value,idempotency_key:key}});say(r.status==="approved"?"Credit approved (mock)":"Duplicate ignored — already applied",1);await open(cur)});
- $("#ask").onclick=e=>guard(e.target,async()=>{const q=prompt("What do you need from the customer?");if(!q)return;await api(`/cases/${cur}/request-info`,{method:"POST",body:{question:q}});say("Information request recorded",1);await open(cur)});
- $("#addev").onclick=e=>guard(e.target,async()=>{let p;try{p=JSON.parse($("#patch").value)}catch{throw new Error("Evidence must be valid JSON")}await api(`/cases/${cur}/evidence`,{method:"POST",body:{patch:p,note:$("#note").value}});say("Evidence added — earlier conclusions are now marked stale",1);await open(cur)})}
-loadCases().catch(e=>say(e.message));
-</script></body></html>
+const $ = s => document.querySelector(s);
+let cur = null;
+
+const esc=s=>String(s ?? "").replace(/[&<>"']/g, c => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+}[c]));
+
+function say(t, ok) {
+  const m = $("#msg");
+  m.className = ok ? "good" : "err";
+  m.textContent = t;
+  if (ok) setTimeout(() => { m.className = ""; }, 3500);
+}
+
+async function api(p, o = {}) {
+  const r = await fetch("/api" + p, {
+    headers: { "Content-Type": "application/json" },
+    ...o,
+    body: o.body ? JSON.stringify(o.body) : undefined
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(typeof j.detail === "string" ? j.detail : "Request failed (" + r.status + ")");
+  return j;
+}
+
+async function guard(btn, fn) {
+  if (btn) {
+    btn.disabled = true;
+    btn.dataset.origText = btn.textContent;
+    btn.innerHTML = '<span class="spinner"></span> ' + btn.textContent;
+  }
+  try {
+    await fn();
+  } catch (e) {
+    say(e.message);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = btn.dataset.origText;
+    }
+  }
+}
+
+async function loadCases() {
+  const cs = await api("/cases");
+  $("#emptyCases").hidden = cs.length > 0;
+  $("#cases").innerHTML = cs.map(c => `
+    <li tabindex="0" data-id="${esc(c.id)}" ${c.id === cur ? 'aria-current="true"' : ""}>
+      <div class="case-id">${esc(c.id)}</div>
+      <div class="case-meta">
+        <span>${esc(c.customer)}</span>
+        <span class="tag status-${esc(c.status)}">${esc(c.status)}</span>
+      </div>
+    </li>
+  `).join("");
+
+  document.querySelectorAll("#cases li").forEach(li => {
+    li.onclick = () => open(li.dataset.id);
+    li.onkeydown = e => { if (e.key === "Enter") open(li.dataset.id); };
+  });
+}
+
+$("#load").onclick = e => guard(e.target, async () => {
+  const p = await api("/sample");
+  const r = await api("/cases", { method: "POST", body: { payload: p } });
+  await loadCases();
+  await open(r.id);
+  say("Sample case initialized successfully", 1);
+});
+
+async function open(id) {
+  cur = id;
+  await loadCases();
+  const d = await api("/cases/" + id);
+  render(d);
+}
+
+function render(d) {
+  const c = d.calculation || d.calc, L = c ? c.lines : [], f = d.findings;
+
+  const cmp = c ? `
+    <table>
+      <thead>
+        <tr>
+          <th>LINE</th>
+          <th>BILLED QTY</th>
+          <th>VALID QTY</th>
+          <th>BILLED</th>
+          <th>RECALCULATED</th>
+          <th>DELTA</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${L.map(l => `
+          <tr>
+            <td>
+              <b>${esc(l.line_id)}</b> ${esc(l.metric)}
+              ${l.flags.map(x => `<span class="tag ${["AMBIGUOUS_RULE","MISSING_USAGE","CALC_ERROR"].includes(x) ? "amb" : "calc"}">${esc(x)}</span>`).join("")}
+            </td>
+            <td>${esc(l.billed_qty)}</td>
+            <td>${esc(l.correct_qty)}</td>
+            <td>${esc(l.billed_amount)}</td>
+            <td>${esc(l.correct_amount)}</td>
+            <td class="${+l.delta ? "bad" : "ok"}">${esc(l.delta)}</td>
+          </tr>
+        `).join("")}
+        <tr style="font-weight:600;border-top:2px solid var(--hairline)">
+          <td>TOTAL</td>
+          <td></td>
+          <td></td>
+          <td>${esc(c.original_total)}</td>
+          <td>${esc(c.recalculated_total)}</td>
+          <td class="bad">${esc(c.overbilled)}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="muted" style="margin-top:10px">
+      Calculated from evidence <b>v${c.evidence_version}</b> ·
+      Already credited: <b>${esc(c.already_credited)}</b> ·
+      ${+c.unresolved_ambiguous ? `<span class="tag amb">CONTRACT HELD: ${esc(c.unresolved_ambiguous)}</span> · ` : ""}
+      Creditable now: <b style="color:var(--ok)">${esc(c.creditable_now)}</b>
+      ${c.partial ? ` · <span class="tag amb">PARTIAL: ${c.errors.map(esc).join(", ")}</span>` : ""}
+    </div>
+  ` : `<p class="muted">No calculation record. Click "Investigate" to trigger deterministic recalculation.</p>`;
+
+  $("#detail").innerHTML = `
+    <!-- Case Overview Panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <h2>${esc(d.case.id)} — ${esc(d.case.customer)}</h2>
+          <div class="cite" style="margin-top:4px">STATUS: <span class="tag status-${esc(d.case.status)}">${esc(d.case.status)}</span> Evidence v${d.current.version}</div>
+        </div>
+        <div>
+          ${d.calc_stale ? '<span class="tag stale">CALCULATION STALE</span>' : ""}
+        </div>
+      </div>
+      <p style="font-size:15px;line-height:1.6;margin:0 0 16px;">${esc(d.current.payload.dispute_text)}</p>
+      <div class="row">
+        <button id="inv" class="btn-primary">${c ? "RE-RUN INVESTIGATION" : "INVESTIGATE"}</button>
+        <span class="muted">Runs state-graph: calculate → interpret → verify</span>
+      </div>
+    </div>
+
+    <!-- Invoice Recalculation Table -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Original vs Recalculated Invoice</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">DETERMINISTIC DECIMAL MATH</span>
+      </div>
+      ${cmp}
+    </div>
+
+    <!-- Agent Findings Panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Agent Findings & Citations</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">${f.length} FINDING${f.length === 1 ? "" : "S"}</span>
+      </div>
+      ${f.length ? f.map(x => `
+        <div class="finding ${esc(x.kind)} ${x.stale ? "stale" : ""}">
+          <div class="row">
+            <span class="tag ${x.kind === "calculation_error" ? "calc" : x.kind === "contract_ambiguity" ? "amb" : ""}">${esc(x.kind.replace("_", " "))}</span>
+            <span class="tag">${esc(x.source)}</span>
+            <span class="tag status-${esc(x.status)}">${esc(x.status)}</span>
+            ${x.stale ? '<span class="tag stale">STALE (v' + x.evidence_version + ')</span>' : ""}
+          </div>
+          <div class="finding-statement">${esc(x.statement)}</div>
+          <div class="cite">CITATIONS: ${x.citations.map(c => `<code>${esc(c)}</code>`).join(", ")}</div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn-ghost" data-a="accepted" data-f="${esc(x.id)}">ACCEPT</button>
+            <button class="btn-ghost" data-a="edited" data-f="${esc(x.id)}" data-s="${esc(x.statement)}">EDIT</button>
+            <button class="btn-ghost" data-a="rejected" data-f="${esc(x.id)}">REJECT</button>
+          </div>
+        </div>
+      `).join("") : '<p class="muted">No findings yet. Run investigation to produce cited findings.</p>'}
+    </div>
+
+    <!-- Resolution & Mock Credit -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Settlement Resolution</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">IDEMPOTENT DISBURSEMENT</span>
+      </div>
+      <div class="row" style="margin-bottom:12px">
+        <input id="amt" style="width:140px" aria-label="Credit amount" value="${c ? esc(c.creditable_now) : "0.00"}">
+        <input id="why" placeholder="Reason for adjustment (required)" aria-label="Reason" style="flex:1">
+        <button id="credit" class="btn-primary">APPROVE CREDIT</button>
+        <button id="ask" class="btn-ghost">REQUEST INFO</button>
+      </div>
+      <p class="muted" style="margin-bottom:14px">Guarantees: Duplicate requests are ignored via idempotency tokens; credits exceeding overbilling are blocked.</p>
+      ${d.adjustments.map(a => `
+        <div class="ok" style="font-family:var(--font-mono);font-size:12px;margin-top:6px;">
+          ✓ APPROVED ${esc(a.id)}: $${esc(a.amount)} (Evidence v${a.evidence_version})
+          ${a.stale ? '<span class="tag stale">APPROVED ON PRIOR EVIDENCE</span>' : ""}
+        </div>
+      `).join("")}
+    </div>
+
+    <!-- Add Evidence Patch -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Inject Evidence</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">RE-OPENS CASE & MARKS STALE</span>
+      </div>
+      <textarea id="patch" rows="3" aria-label="Evidence JSON" placeholder='{"usage":[{"id":"U9","metric":"api_calls","quantity":"1000","date":"2026-09-12"}]}'></textarea>
+      <div class="row" style="margin-top:10px">
+        <input id="note" placeholder="Evidence note (e.g., revised gateway server log export)" style="flex:1">
+        <button id="addev" class="btn-primary">ADD EVIDENCE</button>
+      </div>
+    </div>
+
+    <!-- Audit Decision Trail -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Audit Decision Trail</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">APPEND-ONLY AUDIT LOG</span>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:12px;line-height:1.7;">
+        ${d.decisions.map(x => `
+          <div class="muted">
+            <span style="color:#222">${new Date(x.created_at * 1000).toISOString().replace("T", " ").slice(0, 19)}</span>
+            · <b>${esc(x.actor)}</b>
+            · <span style="color:#000">${esc(x.action)}</span>
+            ${esc(x.detail === "{}" ? "" : x.detail)}
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  $("#inv").onclick = e => guard(e.target, async () => {
+    const r = await api(`/cases/${cur}/investigate`, { method: "POST" });
+    say(r.ok ? `Investigation complete (${r.llm_used ? "Claude AI" : "Rule-based fallback"}${r.llm_error ? " — " + r.llm_error : ""})` : "Calculation failed: " + r.error, r.ok);
+    await open(cur);
+  });
+
+  document.querySelectorAll("[data-a]").forEach(b => b.onclick = () => guard(b, async () => {
+    let s;
+    if (b.dataset.a === "edited") {
+      s = prompt("Edit finding statement:", b.dataset.s);
+      if (!s) return;
+    }
+    await api(`/cases/${cur}/findings/${b.dataset.f}`, {
+      method: "POST",
+      body: { status: b.dataset.a, statement: s }
+    });
+    await open(cur);
+  }));
+
+  $("#credit").onclick = e => guard(e.target, async () => {
+    const amtVal = $("#amt").value;
+    const key = sessionStorage.getItem("k" + cur + amtVal) || ("ui-" + crypto.randomUUID());
+    sessionStorage.setItem("k" + cur + amtVal, key);
+    const r = await api(`/cases/${cur}/credit`, {
+      method: "POST",
+      body: { amount: amtVal, reason: $("#why").value, idempotency_key: key }
+    });
+    say(r.status === "approved" ? "Credit approved and logged to ledger" : "Duplicate request ignored — idempotency key recognized", 1);
+    await open(cur);
+  });
+
+  $("#ask").onclick = e => guard(e.target, async () => {
+    const q = prompt("Enter specific inquiry to customer:");
+    if (!q) return;
+    await api(`/cases/${cur}/request-info`, { method: "POST", body: { question: q } });
+    say("Information request dispatched to customer", 1);
+    await open(cur);
+  });
+
+  $("#addev").onclick = e => guard(e.target, async () => {
+    let p;
+    try {
+      p = JSON.parse($("#patch").value);
+    } catch {
+      throw new Error("Invalid JSON: please ensure evidence patch is valid JSON syntax");
+    }
+    await api(`/cases/${cur}/evidence`, { method: "POST", body: { patch: p, note: $("#note").value } });
+    say("Evidence patch accepted — prior conclusions marked stale", 1);
+    await open(cur);
+  });
+}
+
+loadCases().catch(e => say(e.message));
+</script>
+</body>
+</html>
