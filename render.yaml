@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: dispute-desk
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false            # set in the Render dashboard, never in git
+      - key: LLM_MODEL
+        value: claude-sonnet-4-6
+      - key: AUTO_SEED
+        value: "1"             # free tier has ephemeral disk: re-create the demo case on boot
+      - key: DB_PATH
+        value: /tmp/billing.db
