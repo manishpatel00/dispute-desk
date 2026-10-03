@@ -7,7 +7,7 @@
 <title>Dispute Desk — Deterministic Billing Resolution</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --primary: #000000;
@@ -17,11 +17,13 @@
   --accent-mint: #c8f6f9;
   --canvas: #ffffff;
   --hairline: #ebebeb;
+  --hairline-subtle: #f0f0f0;
   --canvas-dark: #010120;
-  --surface-dark-soft: #171b26;
-  --hairline-dark: #26263a;
+  --surface-dark-soft: #141724;
+  --hairline-dark: #232838;
   --ink: #000000;
   --body: #666666;
+  --body-light: #8e95a5;
   --on-dark: #ffffff;
   --bad: #b3261e;
   --ok: #1b6b4a;
@@ -31,14 +33,16 @@
   --rounded-xs: 3.25px;
   --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-float: 0 8px 30px rgba(0,0,0,0.12);
 }
 
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  background: var(--canvas);
+  background: #fafbfc;
   color: var(--ink);
-  font: 15px/1.55 var(--font-sans);
+  font: 14.5px/1.55 var(--font-sans);
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
@@ -60,11 +64,61 @@ a.skip {
 }
 a.skip:focus { top: 12px; }
 
+/* ─── Top Brand Navigation Bar ─── */
+.top-nav {
+  background: var(--canvas-dark);
+  border-bottom: 1px solid var(--hairline-dark);
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.brand-logo-gem {
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-magenta), var(--accent-periwinkle));
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+.brand-name {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.top-nav-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--body-light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.live-pulse {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+  margin-right: 4px;
+}
+
 /* ─── Hero Band (Canvas Dark #010120) ─── */
 .hero-band {
   background: var(--canvas-dark);
   color: var(--on-dark);
-  padding: 48px 32px 56px;
+  padding: 44px 32px 52px;
   border-bottom: 1px solid var(--hairline-dark);
   position: relative;
   overflow: hidden;
@@ -73,7 +127,7 @@ a.skip:focus { top: 12px; }
   max-width: 1280px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
+  grid-template-columns: 1.3fr 0.7fr;
   gap: 40px;
   align-items: center;
 }
@@ -99,19 +153,19 @@ a.skip:focus { top: 12px; }
 }
 
 .hero-title {
-  font-size: clamp(30px, 4vw, 44px);
-  font-weight: 500;
+  font-size: clamp(28px, 3.8vw, 42px);
+  font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.035em;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   color: var(--on-dark);
 }
 
 .hero-lead {
-  font-size: 16px;
+  font-size: 15.5px;
   line-height: 1.6;
-  color: #a3a8b8;
-  max-width: 640px;
+  color: #9ea4b6;
+  max-width: 620px;
   margin: 0 0 24px;
 }
 
@@ -126,18 +180,18 @@ a.skip:focus { top: 12px; }
 .ribbon-svg {
   width: 100%;
   height: auto;
-  max-height: 240px;
-  filter: drop-shadow(0 0 40px rgba(239, 44, 193, 0.25));
+  max-height: 220px;
+  filter: drop-shadow(0 0 44px rgba(239, 44, 193, 0.3));
 }
 
 /* ─── Buttons ─── */
 button {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 9px 18px;
+  padding: 8.5px 16px;
   border-radius: var(--rounded-sm);
   border: 1px solid transparent;
   cursor: pointer;
@@ -163,8 +217,8 @@ button:disabled {
   border-color: var(--primary);
 }
 .btn-primary:hover:not(:disabled) {
-  background: #222222;
-  border-color: #222222;
+  background: #262626;
+  border-color: #262626;
 }
 
 .btn-mint {
@@ -173,7 +227,7 @@ button:disabled {
   border-color: var(--accent-mint);
 }
 .btn-mint:hover:not(:disabled) {
-  background: #b2eef2;
+  background: #b5eff3;
 }
 
 .btn-ghost {
@@ -182,8 +236,8 @@ button:disabled {
   border-color: var(--hairline);
 }
 .btn-ghost:hover:not(:disabled) {
-  background: #f7f7f7;
-  border-color: #d1d1d1;
+  background: #f4f5f7;
+  border-color: #cccccc;
 }
 
 .btn-ghost-on-dark {
@@ -192,19 +246,19 @@ button:disabled {
   border-color: var(--hairline-dark);
 }
 .btn-ghost-on-dark:hover:not(:disabled) {
-  background: #252b3b;
+  background: #1e2333;
 }
 
 /* ─── Layout Workspace ─── */
 main {
   max-width: 1280px;
-  margin: 32px auto;
+  margin: 28px auto;
   padding: 0 32px;
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 290px 1fr;
   gap: 28px;
 }
-@media (max-width: 860px) {
+@media (max-width: 890px) {
   main {
     grid-template-columns: 1fr;
     padding: 0 16px;
@@ -217,8 +271,9 @@ main {
   background: var(--canvas);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-sm);
-  padding: 20px 24px;
-  margin-bottom: 20px;
+  padding: 22px 24px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-sm);
 }
 
 .panel-header {
@@ -230,16 +285,102 @@ main {
   margin-bottom: 16px;
 }
 .panel-header h2 {
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 17px;
+  font-weight: 600;
   letter-spacing: -0.02em;
   margin: 0;
 }
 
+/* ─── KPI Metric Cards Bar ─── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+@media (max-width: 768px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.kpi-card {
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  padding: 12px 14px;
+  background: #fafbfc;
+}
+.kpi-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--body);
+  margin-bottom: 4px;
+}
+.kpi-val {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.kpi-val.bad { color: var(--bad); }
+.kpi-val.ok { color: var(--ok); }
+
+/* ─── Process Pipeline Stepper ─── */
+.stepper-bar {
+  display: flex;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  background: #fafbfc;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.step-item {
+  flex: 1;
+  padding: 9px 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--body);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-right: 1px solid var(--hairline);
+}
+.step-item:last-child { border-right: none; }
+.step-item.active {
+  background: #ffffff;
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: inset 0 -2px 0 var(--primary);
+}
+.step-num {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  background: #e2e5eb;
+  border-radius: 50%;
+  font-size: 9.5px;
+}
+.step-item.active .step-num {
+  background: var(--primary);
+  color: #fff;
+}
+
 /* ─── Case Pipeline Sidebar ─── */
+.search-input {
+  margin-bottom: 12px;
+  padding: 7px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
 ul.cases {
   list-style: none;
-  margin: 12px 0 0;
+  margin: 0;
   padding: 0;
 }
 ul.cases li {
@@ -262,12 +403,12 @@ ul.cases li[aria-current="true"] {
 }
 .case-id {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
 }
 .case-meta {
   color: var(--body);
-  font-size: 12px;
+  font-size: 11.5px;
   margin-top: 4px;
   display: flex;
   justify-content: space-between;
@@ -278,53 +419,53 @@ ul.cases li[aria-current="true"] {
 .tag {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 2px 7px;
+  padding: 2.5px 8px;
   border-radius: var(--rounded-sm);
   border: 1px solid var(--hairline);
   background: #ffffff;
   color: var(--body);
 }
 .tag.status-open {
-  border-color: var(--accent-periwinkle);
-  color: #3b3bbb;
-  background: #f4f4ff;
+  border-color: #c9c7ff;
+  color: #3533a8;
+  background: #f4f3ff;
 }
 .tag.status-under_review {
-  border-color: var(--warn);
+  border-color: #e4c17b;
   color: var(--warn);
-  background: #fff8eb;
+  background: #fff9ed;
 }
 .tag.status-resolved {
-  border-color: var(--ok);
+  border-color: #a3dfbe;
   color: var(--ok);
-  background: #f0f9f4;
+  background: #f0faf4;
 }
 .tag.status-awaiting_info {
-  border-color: #888888;
-  color: #444444;
-  background: #f5f5f5;
+  border-color: #b0b0b0;
+  color: #404040;
+  background: #f4f4f4;
 }
 .tag.calc {
-  border-color: var(--bad);
+  border-color: #fca5a5;
   color: var(--bad);
-  background: #fff3f2;
+  background: #fff5f5;
 }
 .tag.amb {
-  border-color: var(--warn);
+  border-color: #fcd34d;
   color: var(--warn);
-  background: #fff8eb;
+  background: #fffbeb;
 }
 .tag.stale {
-  border-color: var(--stale);
+  border-color: #d8b4fe;
   color: var(--stale);
-  background: #f6f0ff;
+  background: #faf5ff;
 }
 
-/* ─── Data Tables (Technical Invoice Spec) ─── */
+/* ─── Data Tables ─── */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -335,7 +476,7 @@ th {
   background: var(--hairline);
   color: #333333;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -349,7 +490,7 @@ td {
   border-bottom: 1px solid var(--hairline);
   text-align: right;
 }
-tr:hover td { background: #fafafa; }
+tr:hover td { background: #fbfbfd; }
 .bad { color: var(--bad); font-weight: 600; }
 .ok { color: var(--ok); font-weight: 500; }
 
@@ -358,22 +499,28 @@ tr:hover td { background: #fafafa; }
   border: 1px solid var(--hairline);
   border-left: 4px solid var(--body);
   border-radius: var(--rounded-sm);
-  padding: 14px 16px;
+  padding: 14px 18px;
   margin: 12px 0;
   background: var(--canvas);
+  transition: all 0.15s ease;
+}
+.finding:hover {
+  border-color: #d0d0d0;
+  border-left-color: var(--primary);
 }
 .finding.calculation_error {
   border-left-color: var(--bad);
-  background: #fffbfb;
+  background: #fffdfd;
 }
 .finding.contract_ambiguity {
   border-left-color: var(--warn);
-  background: #fffcf5;
+  background: #fffefa;
 }
 .finding-statement {
   font-size: 14px;
-  line-height: 1.5;
-  margin: 8px 0;
+  line-height: 1.55;
+  margin: 9px 0;
+  color: #1a1a1a;
 }
 .cite {
   font-family: var(--font-mono);
@@ -381,22 +528,29 @@ tr:hover td { background: #fafafa; }
   color: var(--body);
   margin-top: 6px;
 }
+.cite code {
+  background: #f2f4f7;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #24292e;
+}
 
 /* ─── Form Inputs ─── */
 input, textarea {
   font-family: inherit;
-  font-size: 14px;
-  padding: 8px 12px;
+  font-size: 13.5px;
+  padding: 8.5px 12px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-sm);
   background: var(--canvas);
   color: var(--ink);
   width: 100%;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 input:focus, textarea:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
 }
 textarea {
   font-family: var(--font-mono);
@@ -404,7 +558,7 @@ textarea {
   resize: vertical;
 }
 
-/* ─── Notifications & Status Bar ─── */
+/* ─── Floating Toast Notification ─── */
 #msg {
   position: sticky;
   top: 16px;
@@ -416,10 +570,11 @@ textarea {
   font-size: 12px;
   letter-spacing: 0.04em;
   z-index: 100;
+  box-shadow: var(--shadow-float);
 }
 #msg.err {
   display: block;
-  background: #fdf2f2;
+  background: #fff5f5;
   color: var(--bad);
   border: 1px solid var(--bad);
 }
@@ -436,7 +591,7 @@ textarea {
   flex-wrap: wrap;
   align-items: center;
 }
-.muted { color: var(--body); font-size: 13px; }
+.muted { color: var(--body); font-size: 12.5px; }
 
 /* ─── Spinner ─── */
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -466,19 +621,20 @@ textarea {
 /* ─── Terminal Wordmark Banner ─── */
 .footer-wordmark-banner {
   margin-top: 60px;
-  padding: 30px 32px 40px;
+  padding: 36px 32px 48px;
   border-top: 1px solid var(--hairline);
   text-align: center;
   overflow: hidden;
   user-select: none;
+  background: #ffffff;
 }
 .wordmark-text {
   font-family: var(--font-sans);
   font-size: clamp(48px, 11vw, 130px);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.05em;
   line-height: 0.9;
-  color: #f0f0f0;
+  color: #ebebeb;
   text-transform: lowercase;
 }
 .footer-sub {
@@ -487,7 +643,7 @@ textarea {
   color: #999999;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-top: 12px;
+  margin-top: 14px;
 }
 </style>
 </head>
@@ -495,18 +651,33 @@ textarea {
 
 <a href="#main-content" class="skip">Skip to main content</a>
 
+<!-- ─── Top Brand Navigation Bar ─── -->
+<nav class="top-nav" role="navigation" aria-label="Global">
+  <a href="/" class="brand-mark">
+    <div class="brand-logo-gem"></div>
+    <span class="brand-name">Dispute Desk</span>
+  </a>
+  <div class="top-nav-meta">
+    <span><span class="live-pulse"></span>ENGINE: ONLINE</span>
+    <span>·</span>
+    <span>MATH: DETERMINISTIC (DECIMAL)</span>
+    <span>·</span>
+    <span>AI: ANTHROPIC CLAUDE</span>
+  </div>
+</nav>
+
 <!-- ─── Hero Band (Dark #010120) with Signature Gradient Ribbon ─── -->
 <header class="hero-band" role="banner">
   <div class="hero-inner">
     <div>
       <div class="mono-eyebrow">
-        <span>● SYSTEM ACTIVE</span>
+        <span>● MISSION CRITICAL RESOLUTION</span>
         <span>·</span>
-        <span>DETERMINISTIC ENGINE V1.0</span>
+        <span>PRODUCTION SPEC V1.0</span>
       </div>
       <h1 class="hero-title">Deterministic billing dispute resolution.</h1>
       <p class="hero-lead">
-        Auditing discrepancies with Decimal arithmetic. Multi-agent semantic interpretation grounded in contract citations, governed by human verification.
+        Recalculating discrepancies with Decimal arithmetic. Multi-agent semantic interpretation grounded in contract citations, verified by human review.
       </p>
       <div class="hero-actions">
         <button id="load" class="btn-mint">LOAD SAMPLE CASE</button>
@@ -544,6 +715,7 @@ textarea {
         <h2>Cases Pipeline</h2>
         <span class="tag">AUDITED</span>
       </div>
+      <input type="text" id="caseSearch" class="search-input" placeholder="Filter cases by customer or ID..." aria-label="Filter cases">
       <div id="emptyCases" class="empty-state">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
           <path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -577,6 +749,7 @@ textarea {
 <script>
 const $ = s => document.querySelector(s);
 let cur = null;
+let allCases = [];
 
 const esc=s=>String(s ?? "").replace(/[&<>"']/g, c => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -586,7 +759,7 @@ function say(t, ok) {
   const m = $("#msg");
   m.className = ok ? "good" : "err";
   m.textContent = t;
-  if (ok) setTimeout(() => { m.className = ""; }, 3500);
+  if (ok) setTimeout(() => { m.className = ""; }, 3800);
 }
 
 async function api(p, o = {}) {
@@ -618,8 +791,7 @@ async function guard(btn, fn) {
   }
 }
 
-async function loadCases() {
-  const cs = await api("/cases");
+function displayCases(cs) {
   $("#emptyCases").hidden = cs.length > 0;
   $("#cases").innerHTML = cs.map(c => `
     <li tabindex="0" data-id="${esc(c.id)}" ${c.id === cur ? 'aria-current="true"' : ""}>
@@ -636,6 +808,23 @@ async function loadCases() {
     li.onkeydown = e => { if (e.key === "Enter") open(li.dataset.id); };
   });
 }
+
+async function loadCases() {
+  allCases = await api("/cases");
+  displayCases(allCases);
+}
+
+$("#caseSearch").oninput = e => {
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) {
+    displayCases(allCases);
+    return;
+  }
+  const filtered = allCases.filter(c => 
+    c.id.toLowerCase().includes(q) || (c.customer && c.customer.toLowerCase().includes(q))
+  );
+  displayCases(filtered);
+};
 
 $("#load").onclick = e => guard(e.target, async () => {
   const p = await api("/sample");
@@ -654,6 +843,48 @@ async function open(id) {
 
 function render(d) {
   const c = d.calculation || d.calc, L = c ? c.lines : [], f = d.findings;
+
+  const kpis = c ? `
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Original Billed</div>
+        <div class="kpi-val">$${esc(c.original_total)}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Recalculated Sum</div>
+        <div class="kpi-val">$${esc(c.recalculated_total)}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Net Overbilled</div>
+        <div class="kpi-val bad">-$${esc(c.overbilled)}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Creditable Now</div>
+        <div class="kpi-val ok">$${esc(c.creditable_now)}</div>
+      </div>
+    </div>
+  ` : "";
+
+  const stepper = `
+    <div class="stepper-bar">
+      <div class="step-item ${d.current ? "active" : ""}">
+        <span class="step-num">1</span>
+        <span>Evidence v${esc(d.current.version)}</span>
+      </div>
+      <div class="step-item ${c ? "active" : ""}">
+        <span class="step-num">2</span>
+        <span>Recalculation</span>
+      </div>
+      <div class="step-item ${f && f.length ? "active" : ""}">
+        <span class="step-num">3</span>
+        <span>Agent Findings (${f.length})</span>
+      </div>
+      <div class="step-item ${d.adjustments && d.adjustments.length ? "active" : ""}">
+        <span class="step-num">4</span>
+        <span>Settlement</span>
+      </div>
+    </div>
+  `;
 
   const cmp = c ? `
     <table>
@@ -695,6 +926,7 @@ function render(d) {
       Calculated from evidence <b>v${c.evidence_version}</b> ·
       Already credited: <b>${esc(c.already_credited)}</b> ·
       ${+c.unresolved_ambiguous ? `<span class="tag amb">CONTRACT HELD: ${esc(c.unresolved_ambiguous)}</span> · ` : ""}
+      Credited in app: <b>${esc(c.credited_in_app)}</b> ·
       Creditable now: <b style="color:var(--ok)">${esc(c.creditable_now)}</b>
       ${c.partial ? ` · <span class="tag amb">PARTIAL: ${c.errors.map(esc).join(", ")}</span>` : ""}
     </div>
@@ -706,25 +938,27 @@ function render(d) {
       <div class="panel-header">
         <div>
           <h2>${esc(d.case.id)} — ${esc(d.case.customer)}</h2>
-          <div class="cite" style="margin-top:4px">STATUS: <span class="tag status-${esc(d.case.status)}">${esc(d.case.status)}</span> Evidence v${d.current.version}</div>
+          <div class="cite" style="margin-top:4px">STATUS: <span class="tag status-${esc(d.case.status)}">${esc(d.case.status)}</span> · EVIDENCE V${d.current.version}</div>
         </div>
         <div>
-          ${d.calc_stale ? '<span class="tag stale">CALCULATION STALE</span>' : ""}
+          ${d.calc_stale ? '<span class="tag stale">CALCULATION STALE — RE-RUN INVESTIGATION</span>' : ""}
         </div>
       </div>
-      <p style="font-size:15px;line-height:1.6;margin:0 0 16px;">${esc(d.current.payload.dispute_text)}</p>
+      ${stepper}
+      <p style="font-size:15px;line-height:1.6;margin:0 0 16px;color:#222222;">${esc(d.current.payload.dispute_text)}</p>
       <div class="row">
         <button id="inv" class="btn-primary">${c ? "RE-RUN INVESTIGATION" : "INVESTIGATE"}</button>
-        <span class="muted">Runs state-graph: calculate → interpret → verify</span>
+        <span class="muted">Executes state-graph: calculate → interpret → verify citations</span>
       </div>
     </div>
 
-    <!-- Invoice Recalculation Table -->
+    <!-- Invoice Recalculation Table & KPIs -->
     <div class="panel">
       <div class="panel-header">
         <h2>Original vs Recalculated Invoice</h2>
         <span class="mono-eyebrow mono-eyebrow-dark">DETERMINISTIC DECIMAL MATH</span>
       </div>
+      ${kpis}
       ${cmp}
     </div>
 
