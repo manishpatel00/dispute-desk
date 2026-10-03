@@ -8,7 +8,7 @@ pip install -r requirements.txt
 cp .env.example .env            # optional: set ANTHROPIC_API_KEY for AI interpretation
 uvicorn app.main:app --port 8000   # open http://localhost:8000, click "Load sample case"
 pip install -r requirements-dev.txt
-pytest -q --cov=app             # ~110 tests, ~98% coverage (incl. property-based + fuzz)
+pytest -q --cov=app             # 115 tests, 99% coverage (incl. property-based + fuzz)
 ```
 Docker: `docker build -t dispute-desk . && docker run -p 8000:8000 -e ANTHROPIC_API_KEY=... -v $PWD/data:/data dispute-desk`
 
@@ -26,13 +26,13 @@ UI (static/index.html) -> FastAPI (app/main.py) -> SQLite (app/store.py)
 - **Audit trail**: `decisions` (every accept/edit/reject/credit/info-request), `evidence` (all versions), `agent_runs` (node trace). Structured JSON logs to stdout.
 
 ## Testing
-~110 tests, ~98% line coverage, repeated runs stable. Layers:
+115 tests, 99% line coverage, repeated runs stable. Layers:
 - **Requirement traceability** (`test_requirements.py`): one group per requirement of the brief.
 - **Property-based** (Hypothesis, `test_properties.py`): for any generated evidence, totals reconcile, money always has 2 decimals, creditable <= overbilled, event order never changes money, duplicates never add quantity, held/missing/failed lines never produce credit, and credits through the API never exceed the cap.
 - **Fuzzing**: random JSON to case creation, evidence patches, ids, amounts and keys must never produce a 5xx (this found a real crash on `{"usage": null}`).
 - **Security** (`test_security.py`): security headers/CSP, 413 on oversized bodies, SQL-injection and path-traversal inertness, stored-XSS escaping audit of every dynamic UI expression, no error-detail leakage, WAL mode.
 - **Concurrency**: threaded same-key credits, cap races, concurrent evidence versions.
-- **Mutation testing** (`python scripts/mutation_check.py`): injects 29 deliberate bugs into a temp copy; 28/29 are caught. The survivor ("tier boundary off-by-one") is an *equivalent mutant* - at exactly the cap the next tier adds nothing, so behaviour is identical. The first run caught only 23/29; the gaps (negative allowance, exact-cap credit, partially-grounded citations, finding replacement, rate-limit boundary) became `tests/test_mutation_gaps.py`.
+- **Mutation testing** (`python scripts/mutation_check.py`): injects 29 deliberate bugs into a temp copy; all 29/29 are caught (100% kill rate). The first run caught 23/29; the gaps (negative allowance, exact-cap credit, partially-grounded citations, finding replacement, rate-limit boundary) were targeted with tests in `tests/test_mutation_gaps.py`.
 After deploying: `python scripts/smoke.py https://<your-url>` runs the reviewer flow against the hosted app and reports whether the AI path was used.
 
 ### Bugs found by adversarial probing (all fixed, all regression-tested)
