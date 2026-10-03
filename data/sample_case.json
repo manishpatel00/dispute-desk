@@ -1,0 +1,25 @@
+{
+  "customer": "Acme Analytics Pvt Ltd",
+  "dispute_text": "Our API invoice for September looks far too high. We were charged for 1,300,000 calls but our dashboard shows around 1.2M, and the support plan fee seems higher than our contract.",
+  "invoice": {
+    "id": "INV-2026-09-0042", "period_start": "2026-09-01", "period_end": "2026-09-30",
+    "lines": [
+      {"id": "L1", "metric": "api_calls", "quantity": "1300000", "amount": "9500.00", "rule_id": "R1"},
+      {"id": "L2", "metric": "support", "quantity": "1", "amount": "1200.00", "rule_id": "R2"},
+      {"id": "L3", "metric": "storage_gb", "quantity": "500", "amount": "400.00", "rule_id": "R3"}
+    ]
+  },
+  "rules": [
+    {"id": "R1", "type": "tiered", "included": 100000, "tiers": [{"up_to": 500000, "rate": "0.01"}, {"up_to": null, "rate": "0.007"}], "text": "API calls: first 100k included; next 500k at $0.01; beyond at $0.007"},
+    {"id": "R2", "type": "flat", "amount": "1000.00", "text": "Premium support: $1,000/month flat"},
+    {"id": "R3", "type": "per_unit", "rate": "0.80", "included": 0, "ambiguous": "Contract says 'storage billed on average usage' but does not define average vs peak", "text": "Storage: $0.80 per GB-month (average usage)"}
+  ],
+  "usage": [
+    {"id": "U1", "metric": "api_calls", "quantity": "600000", "date": "2026-09-10"},
+    {"id": "U2", "metric": "api_calls", "quantity": "600000", "date": "2026-09-20"},
+    {"id": "U3", "metric": "api_calls", "quantity": "100000", "date": "2026-09-20", "dedupe_key": "U2"},
+    {"id": "U4", "metric": "api_calls", "quantity": "100000", "date": "2026-10-01"},
+    {"id": "U5", "metric": "storage_gb", "quantity": "500", "date": "2026-09-30"}
+  ],
+  "adjustments": []
+}
