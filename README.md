@@ -4,7 +4,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg)](https://fastapi.tiangolo.com)
 [![Coverage: 99%](https://img.shields.io/badge/test_coverage-99%25-brightgreen.svg)]()
 [![Mutation Score: 100%](https://img.shields.io/badge/mutation_kill-29%2F29_(100%25)-success.svg)]()
-[![Design: Together AI Spec](https://img.shields.io/badge/design-together_ai_spec-black.svg)](./DESIGN.md)
+[![Design: System Spec](https://img.shields.io/badge/design-system_v1.0-black.svg)](./DESIGN.md)
 
 Autonomous billing dispute investigation agent with **deterministic recalculation**, **grounded AI interpretation**, and **human-in-the-loop settlement approval**.
 
@@ -73,7 +73,7 @@ graph TD
 2. **Citation Grounding**: Every finding must reference concrete line IDs, rule IDs, and usage event IDs. Ungrounded assertions are automatically purged during the `verify` stage.
 3. **Idempotent Settlement**: Repeated disbursement attempts with the same token are safely recognized and deduplicated; credits exceeding recalculation overbilling are rejected.
 4. **Staleness Tracking**: When new evidence (version N+1) is introduced, prior calculations and conclusions are flagged as `stale` until re-investigated.
-5. **Design System**: Fully documented in [`DESIGN.md`](./DESIGN.md) following the **Together AI / VoltAgent** specification (near-black `#010120` hero, 3-stop gradient ribbon `#fc4c02` → `#ef2cc1` → `#bdbbff`, crisp white canvas, and canonical 4px radius).
+5. **Design System**: Fully documented in [`DESIGN.md`](./DESIGN.md) as a production-grade financial resolution interface (near-black `#010120` hero, signature 3-stop spectrum ribbon `#fc4c02` -> `#ef2cc1` -> `#bdbbff`, crisp white canvas, and canonical 4px radius).
 
 ---
 

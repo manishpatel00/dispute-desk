@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Together AI-grade billing dispute investigation and resolution infrastructure. Deterministic recalculation with AI interpretation and human approval.">
+<meta name="description" content="Production-grade billing dispute investigation and resolution infrastructure. Deterministic recalculation with AI interpretation and human approval.">
 <title>Dispute Desk - Deterministic Billing Resolution</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -257,7 +257,7 @@ main {
   margin: 28px auto;
   padding: 0 32px;
   display: grid;
-  grid-template-columns: 290px 1fr;
+  grid-template-columns: 310px 1fr;
   gap: 28px;
 }
 @media (max-width: 890px) {
@@ -265,6 +265,22 @@ main {
     grid-template-columns: 1fr;
     padding: 0 16px;
     margin: 20px auto;
+  }
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 960px) {
+  .guide-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .guide-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -412,62 +428,85 @@ ul.cases li[aria-current="true"] {
 .case-meta {
   color: var(--body);
   font-size: 11.5px;
-  margin-top: 4px;
+  margin-top: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
+}
+.case-meta span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.case-meta .tag {
+  flex-shrink: 0;
+  margin: 0;
 }
 
-/* ─── Badges & Tags ─── */
+/* ─── Badges & Tags (High-Precision Terminal System) ─── */
 .tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 500;
+  font-size: 10px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 3px 8px;
-  margin-right: 6px;
+  letter-spacing: 0.04em;
+  padding: 2.5px 7px;
+  margin-right: 5px;
   margin-bottom: 4px;
-  border-radius: var(--rounded-sm);
+  border-radius: var(--rounded-xs);
   border: 1px solid var(--hairline);
   background: #ffffff;
-  color: var(--body);
+  color: var(--ink);
+  line-height: 1.2;
+  vertical-align: middle;
 }
 .tag.status-open {
-  border-color: #c9c7ff;
-  color: #3533a8;
-  background: #f4f3ff;
+  border-color: #334155;
+  color: #0f172a;
+  background: #f1f5f9;
 }
 .tag.status-under_review {
-  border-color: #e4c17b;
-  color: var(--warn);
-  background: #fff9ed;
-}
-.tag.status-resolved {
-  border-color: #a3dfbe;
-  color: var(--ok);
-  background: #f0faf4;
-}
-.tag.status-awaiting_info {
-  border-color: #b0b0b0;
-  color: #404040;
-  background: #f4f4f4;
-}
-.tag.calc {
-  border-color: #fca5a5;
-  color: var(--bad);
-  background: #fff5f5;
-}
-.tag.amb {
   border-color: #fcd34d;
-  color: var(--warn);
+  color: #92400e;
   background: #fffbeb;
 }
+.tag.status-resolved {
+  border-color: #86efac;
+  color: #14532d;
+  background: #f0fdf4;
+}
+.tag.status-awaiting_info {
+  border-color: #cbd5e1;
+  color: #475569;
+  background: #f8fafc;
+}
+.tag.calc {
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid #b91c1c;
+  color: #0f172a;
+  background: #f8fafc;
+  font-size: 9.5px;
+  padding: 2px 6px;
+}
+.tag.amb {
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid #d97706;
+  color: #0f172a;
+  background: #f8fafc;
+  font-size: 9.5px;
+  padding: 2px 6px;
+}
 .tag.stale {
-  border-color: #d8b4fe;
-  color: var(--stale);
-  background: #faf5ff;
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid #64748b;
+  color: #334155;
+  background: #f8fafc;
+  font-size: 9.5px;
+  padding: 2px 6px;
 }
 
 /* ─── Data Tables ─── */
@@ -689,7 +728,7 @@ textarea {
       </div>
     </div>
     <div class="hero-ribbon-col">
-      <!-- Signature Together AI 3-color brand gradient ribbon SVG -->
+      <!-- Signature 3-color brand gradient ribbon SVG -->
       <svg class="ribbon-svg" viewBox="0 0 460 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
           <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -740,7 +779,7 @@ textarea {
         <h2>Dispute Desk - Architecture & How It Works</h2>
         <span class="mono-eyebrow mono-eyebrow-dark">OPERATIONAL SPECIFICATION</span>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;">
+      <div class="guide-grid">
         <div style="border:1px solid var(--hairline);padding:14px;background:#fff;border-radius:4px;">
           <div class="mono-eyebrow" style="color:var(--ink);margin-bottom:6px;">1. INGESTION</div>
           <p style="font-size:12.5px;line-height:1.5;color:var(--body);margin:0;">Normalizes invoice lines, multi-tier pricing rules, meter usage logs, and customer dispute statements into evidence v1.</p>
@@ -774,7 +813,7 @@ textarea {
 <!-- ─── Terminal Wordmark Banner ─── -->
 <footer class="footer-wordmark-banner">
   <div class="wordmark-text">dispute.desk</div>
-  <div class="footer-sub">DETERMINISTIC BILLING AGENT · TOGETHER AI SPECIFICATION · VERIFIED IDEMPOTENCY</div>
+  <div class="footer-sub">DETERMINISTIC BILLING AGENT · HIGH-PRECISION RESOLUTION SPECIFICATION · VERIFIED IDEMPOTENCY</div>
 </footer>
 
 <script>
@@ -933,8 +972,10 @@ function render(d) {
         ${L.map(l => `
           <tr>
             <td>
-              <b>${esc(l.line_id)}</b> ${esc(l.metric)}
-              ${l.flags.map(x => `<span class="tag ${["AMBIGUOUS_RULE","MISSING_USAGE","CALC_ERROR"].includes(x) ? "amb" : "calc"}">${esc(x)}</span>`).join("")}
+              <div style="display:inline-flex;align-items:baseline;gap:6px;flex-wrap:wrap">
+                <b>${esc(l.line_id)}</b> <span>${esc(l.metric)}</span>
+                ${l.flags.map(x => `<span class="tag ${["AMBIGUOUS_RULE","MISSING_USAGE","CALC_ERROR"].includes(x) ? "amb" : "calc"}">${esc(x)}</span>`).join("")}
+              </div>
             </td>
             <td>${esc(l.billed_qty)}</td>
             <td>${esc(l.correct_qty)}</td>
@@ -979,7 +1020,7 @@ function render(d) {
       <p style="font-size:15px;line-height:1.6;margin:0 0 16px;color:#222222;">${esc(d.current.payload.dispute_text)}</p>
       <div class="row">
         <button id="inv" class="btn-primary">${c ? "RE-RUN INVESTIGATION" : "INVESTIGATE"}</button>
-        <span class="muted">Executes state-graph: calculate → interpret → verify citations</span>
+        <span class="muted">Executes state-graph: calculate -> interpret -> verify citations</span>
       </div>
     </div>
 

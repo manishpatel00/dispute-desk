@@ -1,15 +1,15 @@
 # DESIGN.md - Dispute Desk Design System
 
-> Built following the **Together AI / VoltAgent** design system and **Egonex-AI / addyosmani** agent engineering specifications.
+> Production Design Specification for Dispute Desk - Enterprise Financial Resolution Architecture.
 
 ---
 
 ## 1. Overview & System Philosophy
 
-Dispute Desk is a mission-critical billing dispute investigation platform: deterministic recalculation, agentic interpretation, and human approval. The brand and visual language project an uncompromising posture of precision, transparency, and high-performance infrastructure:
+Dispute Desk is a mission-critical billing dispute investigation platform: deterministic recalculation, agentic interpretation, and human approval. The visual language projects an uncompromising posture of precision, transparency, and high-performance infrastructure:
 
 - **Near-black hero on top (`#010120`)**: Anchor of seriousness and operational authority.
-- **Three-color brand gradient ribbon (`#fc4c02` → `#ef2cc1` → `#bdbbff`)**: The signature brand chrome representing data transformation, from raw metrics to resolved consensus.
+- **Three-color brand gradient ribbon (`#fc4c02` -> `#ef2cc1` -> `#bdbbff`)**: The signature brand chrome representing data transformation, from raw metrics to resolved consensus.
 - **Crisp white canvas (`#ffffff`)**: Purpose-built for dense financial data, calculation grids, and auditable findings.
 - **Two-face typographic contrast**: Custom geometric display sans for sentence-case headlines (with negative tracking) paired with all-caps monospace (`JetBrains Mono` / `Geist Mono`) for every eyebrow, button, table header, and status badge.
 - **Deterministic 4px radius (`{rounded.sm}`)**: Clean hairline borders (`#ebebeb` / `#26263a`), rejecting gratuitous floating drop shadows.
@@ -47,8 +47,8 @@ The system separates **deterministic calculation** from **AI semantic reasoning*
 │                                   │                                    │
 │                                   ▼                                    │
 │                    AGENTIC INTERPRETATION GRAPH                        │
-│  app/agent.py: gather → calculate → interpret (Claude / Anthropic API) │
-│  → verify citations against verified evidence hashes                   │
+│  app/agent.py: gather -> calculate -> interpret (Claude / Anthropic API) │
+│  -> verify citations against verified evidence hashes                   │
 │  Automatic fallback to rule-based engine on API absence or failure     │
 ├────────────────────────────────────────────────────────────────────────┤
 │                                   │                                    │
@@ -101,7 +101,7 @@ The system separates **deterministic calculation** from **AI semantic reasoning*
 
 ## 4. Typography Scale
 
-Following the Together AI typographic rules:
+Following the core typographic rules:
 - **Display Sans**: `Public Sans` / `Inter` (weight 500, tight negative tracking `-0.02em` to `-0.04em`). Headlines are strictly **sentence-case**.
 - **Monospace Face**: `JetBrains Mono` / `SF Mono` / `Geist Mono` (weight 500, positive tracking `+0.04em` to `+0.08em`). Strictly **uppercase** for eyebrows, buttons, badges, table headers.
 
@@ -146,7 +146,7 @@ Following the Together AI typographic rules:
 ### Do
 - Reserve `{colors.primary}` (`#000000`) for primary action targets.
 - Set every section eyebrow and button label in uppercase monospace with positive tracking.
-- Apply the three-stop brand gradient (`#fc4c02` → `#ef2cc1` → `#bdbbff`) at hero scale as the primary decorative chrome.
+- Apply the three-stop brand gradient (`#fc4c02` -> `#ef2cc1` -> `#bdbbff`) at hero scale as the primary decorative chrome.
 - Maintain `{rounded.sm}` 4px as canonical across all cards, buttons, badges, and inputs.
 - Keep numbers and financial calculations strictly deterministic with `Decimal` precision.
 
