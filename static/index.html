@@ -7,48 +7,42 @@
 <title>Dispute Desk - Deterministic Billing Resolution</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #0f172a;
-  --primary-hover: #1e293b;
-  --accent-cta: #0284c7;
-  --accent-cta-hover: #0369a1;
+  --primary: #000000;
+  --accent-orange: #fc4c02;
+  --accent-magenta: #ef2cc1;
+  --accent-periwinkle: #bdbbff;
+  --accent-mint: #c8f6f9;
   --canvas: #ffffff;
-  --canvas-subtle: #f8fafc;
-  --hairline: #e2e8f0;
-  --hairline-dark: #334155;
-  --canvas-dark: #0f172a;
-  --surface-dark-soft: #1e293b;
-  --ink: #0f172a;
-  --body: #475569;
-  --body-light: #94a3b8;
-  --on-dark: #f8fafc;
-  --bad: #b91c1c;
-  --bad-bg: #fef2f2;
-  --bad-border: #fecaca;
-  --ok: #15803d;
-  --ok-bg: #f0fdf4;
-  --ok-border: #bbf7d0;
-  --warn: #b45309;
-  --warn-bg: #fffbeb;
-  --warn-border: #fde68a;
-  --stale: #475569;
-  --stale-bg: #f1f5f9;
-  --stale-border: #cbd5e1;
+  --hairline: #ebebeb;
+  --hairline-subtle: #f0f0f0;
+  --canvas-dark: #010120;
+  --surface-dark-soft: #141724;
+  --hairline-dark: #232838;
+  --ink: #000000;
+  --body: #666666;
+  --body-light: #8e95a5;
+  --on-dark: #ffffff;
+  --bad: #b3261e;
+  --ok: #1b6b4a;
+  --warn: #8a5a00;
+  --stale: #6b4fa3;
   --rounded-sm: 4px;
-  --rounded-xs: 3px;
+  --rounded-xs: 3.25px;
   --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "JetBrains Mono", Menlo, Consolas, monospace;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-float: 0 8px 30px rgba(0,0,0,0.12);
 }
 
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  background: var(--canvas-subtle);
+  background: #fafbfc;
   color: var(--ink);
-  font: 14px/1.55 var(--font-sans);
+  font: 14.5px/1.55 var(--font-sans);
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
@@ -60,27 +54,24 @@ a.skip {
   background: var(--primary);
   color: #fff;
   padding: 8px 16px;
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   z-index: 1000;
   border-radius: var(--rounded-sm);
   transition: top 0.2s;
 }
 a.skip:focus { top: 12px; }
 
-/* ─── Compact Top Header (<=80px) ─── */
+/* ─── Top Brand Navigation Bar ─── */
 .top-nav {
   background: var(--canvas-dark);
   border-bottom: 1px solid var(--hairline-dark);
-  padding: 0 28px;
-  height: 64px;
+  padding: 14px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.brand-group {
-  display: flex;
-  align-items: center;
-  gap: 16px;
 }
 .brand-mark {
   display: flex;
@@ -88,71 +79,119 @@ a.skip:focus { top: 12px; }
   gap: 10px;
   text-decoration: none;
 }
-.brand-gem {
+.brand-logo-gem {
   width: 14px;
   height: 14px;
-  background: #38bdf8;
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-magenta), var(--accent-periwinkle));
   border-radius: 2px;
   transform: rotate(45deg);
 }
 .brand-name {
-  font-family: var(--font-sans);
-  font-size: 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
   font-weight: 700;
   color: #ffffff;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
-.top-meta {
+.top-nav-meta {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--body-light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
-.top-badge {
+.live-pulse {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+  margin-right: 4px;
+}
+
+/* ─── Hero Band (Canvas Dark #010120) ─── */
+.hero-band {
+  background: var(--canvas-dark);
+  color: var(--on-dark);
+  padding: 44px 32px 52px;
+  border-bottom: 1px solid var(--hairline-dark);
+  position: relative;
+  overflow: hidden;
+}
+.hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 920px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-ribbon-col { display: none; }
+}
+
+.mono-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
-  color: var(--body-light);
-  background: var(--surface-dark-soft);
-  border: 1px solid var(--hairline-dark);
-  padding: 4px 10px;
-  border-radius: var(--rounded-sm);
-  display: inline-flex;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-mint);
+  margin-bottom: 12px;
+  display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
-.pulse-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 6px #22c55e;
+.mono-eyebrow-dark {
+  color: var(--body);
 }
-.pulse-dot.fallback {
-  background: #f59e0b;
-  box-shadow: 0 0 6px #f59e0b;
-}
-.btn-top {
-  background: #ffffff;
-  color: var(--primary);
-  border: 1px solid transparent;
-  font-family: var(--font-sans);
-  font-size: 12.5px;
+
+.hero-title {
+  font-size: clamp(28px, 3.8vw, 42px);
   font-weight: 600;
-  padding: 6px 14px;
-  border-radius: var(--rounded-sm);
-  cursor: pointer;
-  transition: all 0.15s ease;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  margin: 0 0 14px;
+  color: var(--on-dark);
 }
-.btn-top:hover:not(:disabled) {
-  background: #f1f5f9;
+
+.hero-lead {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: #9ea4b6;
+  max-width: 620px;
+  margin: 0 0 24px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ─── Ribbon Graphic (Signature Brand Gradient) ─── */
+.ribbon-svg {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  filter: drop-shadow(0 0 44px rgba(239, 44, 193, 0.3));
 }
 
 /* ─── Buttons ─── */
 button {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 7px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8.5px 16px;
   border-radius: var(--rounded-sm);
   border: 1px solid transparent;
   cursor: pointer;
@@ -161,120 +200,88 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
+  margin-right: 6px;
+  margin-bottom: 4px;
 }
-button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
-  outline: 2px solid var(--accent-cta);
+button:focus-visible {
+  outline: 2px solid var(--accent-magenta);
   outline-offset: 2px;
 }
 button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  opacity: 0.55;
+  cursor: wait;
 }
 
+/* Button Variants */
 .btn-primary {
   background: var(--primary);
   color: #ffffff;
   border-color: var(--primary);
 }
 .btn-primary:hover:not(:disabled) {
-  background: var(--primary-hover);
+  background: #262626;
+  border-color: #262626;
 }
-.btn-accent {
-  background: var(--accent-cta);
-  color: #ffffff;
-  border-color: var(--accent-cta);
+
+.btn-mint {
+  background: var(--accent-mint);
+  color: #000000;
+  border-color: var(--accent-mint);
 }
-.btn-accent:hover:not(:disabled) {
-  background: var(--accent-cta-hover);
+.btn-mint:hover:not(:disabled) {
+  background: #b5eff3;
 }
+
 .btn-ghost {
-  background: #ffffff;
+  background: transparent;
   color: var(--ink);
   border-color: var(--hairline);
 }
 .btn-ghost:hover:not(:disabled) {
-  background: var(--canvas-subtle);
-  border-color: #cbd5e1;
+  background: #f4f5f7;
+  border-color: #cccccc;
 }
 
-.spinner {
-  width: 12px;
-  height: 12px;
-  border: 2px solid rgba(255,255,255,0.4);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
+.btn-ghost-on-dark {
+  background: var(--surface-dark-soft);
+  color: var(--on-dark);
+  border-color: var(--hairline-dark);
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+.btn-ghost-on-dark:hover:not(:disabled) {
+  background: #1e2333;
+}
 
-/* ─── Layout ─── */
+/* ─── Layout Workspace ─── */
 main {
-  max-width: 1360px;
-  margin: 20px auto;
-  padding: 0 24px;
+  max-width: 1280px;
+  margin: 28px auto;
+  padding: 0 32px;
   display: grid;
   grid-template-columns: 310px 1fr;
-  gap: 24px;
+  gap: 28px;
 }
-@media (max-width: 920px) {
+@media (max-width: 890px) {
   main {
     grid-template-columns: 1fr;
     padding: 0 16px;
+    margin: 20px auto;
   }
 }
 
-/* ─── Collapsible "How this works" ─── */
-.how-it-works {
-  background: #ffffff;
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-sm);
-  padding: 10px 18px;
-  margin-bottom: 20px;
-}
-.how-it-works summary {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--body);
-  cursor: pointer;
-  user-select: none;
-}
-.how-it-works summary:hover {
-  color: var(--ink);
-}
 .guide-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid var(--hairline);
 }
 @media (max-width: 960px) {
-  .guide-grid { grid-template-columns: repeat(2, 1fr); }
+  .guide-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 @media (max-width: 520px) {
-  .guide-grid { grid-template-columns: 1fr; }
-}
-.guide-col {
-  padding: 10px;
-  background: var(--canvas-subtle);
-  border-radius: var(--rounded-sm);
-  border: 1px solid var(--hairline);
-}
-.guide-col-title {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-.guide-col p {
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--body);
-  margin: 0;
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ─── Cards & Panels ─── */
@@ -282,10 +289,11 @@ main {
   background: var(--canvas);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-sm);
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 22px 24px;
+  margin-bottom: 22px;
   box-shadow: var(--shadow-sm);
 }
+
 .panel-header {
   display: flex;
   justify-content: space-between;
@@ -295,237 +303,13 @@ main {
   margin-bottom: 16px;
 }
 .panel-header h2 {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
-/* ─── Sidebar Case List ─── */
-.search-input {
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 8px 12px;
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-sm);
-  font-size: 12.5px;
-}
-ul.cases {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-ul.cases li {
-  padding: 12px;
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-sm);
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  background: var(--canvas);
-}
-ul.cases li:hover {
-  background: var(--canvas-subtle);
-  border-color: #cbd5e1;
-}
-ul.cases li[aria-current="true"] {
-  border-color: var(--primary);
-  background: #ffffff;
-  box-shadow: inset 3px 0 0 var(--primary);
-}
-.case-id {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--ink);
-}
-.case-meta {
-  color: var(--body);
-  font-size: 11.5px;
-  margin-top: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-.case-customer {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 0;
-}
-.case-time {
-  font-size: 10.5px;
-  color: var(--body-light);
-  margin-top: 4px;
-}
-
-/* ─── Tabs Navigation ─── */
-.tabs-nav {
-  display: flex;
-  gap: 4px;
-  border-bottom: 1px solid var(--hairline);
-  margin-bottom: 20px;
-}
-.tab-btn {
-  background: transparent;
-  color: var(--body);
-  border: none;
-  border-bottom: 2px solid transparent;
-  padding: 8px 16px;
-  font-size: 13.5px;
-  font-weight: 600;
-  border-radius: 0;
-  cursor: pointer;
-}
-.tab-btn:hover {
-  color: var(--ink);
-  background: transparent;
-}
-.tab-btn.active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
-  background: transparent;
-}
-.tab-pane {
-  display: none;
-}
-.tab-pane.active {
-  display: block;
-}
-
-/* ─── Badges & Tags ─── */
-.tag {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 2.5px 7px;
-  border-radius: var(--rounded-xs);
-  border: 1px solid var(--hairline);
-  background: #ffffff;
-  color: var(--ink);
-  line-height: 1.2;
-  white-space: nowrap;
-}
-.tag.status-open {
-  border-color: #334155;
-  color: #0f172a;
-  background: #f1f5f9;
-}
-.tag.status-under_review {
-  border-color: var(--warn-border);
-  color: var(--warn);
-  background: var(--warn-bg);
-}
-.tag.status-resolved {
-  border-color: var(--ok-border);
-  color: var(--ok);
-  background: var(--ok-bg);
-}
-.tag.status-awaiting_info {
-  border-color: #cbd5e1;
-  color: #475569;
-  background: #f8fafc;
-}
-.tag.calc {
-  border: 1px solid var(--hairline);
-  border-left: 3px solid var(--bad);
-  color: var(--ink);
-  background: #f8fafc;
-  font-size: 9.5px;
-  padding: 2px 6px;
-}
-.tag.amb {
-  border: 1px solid var(--hairline);
-  border-left: 3px solid var(--warn);
-  color: var(--ink);
-  background: #f8fafc;
-  font-size: 9.5px;
-  padding: 2px 6px;
-}
-.tag.stale {
-  border: 1px solid var(--hairline);
-  border-left: 3px solid var(--stale);
-  color: var(--stale);
-  background: var(--stale-bg);
-  font-size: 9.5px;
-  padding: 2px 6px;
-}
-.tag.counted {
-  border-color: var(--ok-border);
-  color: var(--ok);
-  background: var(--ok-bg);
-}
-.tag.excluded {
-  border-color: var(--warn-border);
-  color: var(--warn);
-  background: var(--warn-bg);
-}
-
-/* ─── Citation Chips ─── */
-.cite-btn {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 8px;
-  background: #f1f5f9;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
-  border-radius: var(--rounded-xs);
-  cursor: pointer;
-  margin: 0 4px 4px 0;
-  display: inline-flex;
-}
-.cite-btn:hover {
-  background: #e2e8f0;
-  border-color: #94a3b8;
-}
-
-/* Row Highlight Animation */
-@keyframes rowPulse {
-  0% { background: #fef08a; }
-  100% { background: transparent; }
-}
-.row-highlight {
-  animation: rowPulse 2.5s ease-out;
-}
-
-/* ─── Data Tables ─── */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  margin: 12px 0;
-}
-th {
-  background: #f1f5f9;
-  color: var(--ink);
-  font-weight: 600;
-  text-align: left;
-  padding: 9px 12px;
-  border-bottom: 1px solid var(--hairline);
-  font-size: 12px;
-}
-td {
-  padding: 9px 12px;
-  border-bottom: 1px solid var(--hairline);
-  vertical-align: middle;
-}
-tr:hover td {
-  background: #f8fafc;
-}
-td.num, th.num {
-  text-align: right;
-}
-.bad { color: var(--bad); font-weight: 600; }
-.ok { color: var(--ok); font-weight: 600; }
-.muted { color: var(--body); font-size: 12px; }
-
-/* ─── KPIs ─── */
+/* ─── KPI Metric Cards Bar ─── */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -542,149 +326,368 @@ td.num, th.num {
   background: #fafbfc;
 }
 .kpi-label {
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--body);
   margin-bottom: 4px;
 }
 .kpi-val {
+  font-family: var(--font-sans);
   font-size: 20px;
   font-weight: 700;
+  color: var(--ink);
   letter-spacing: -0.02em;
 }
+.kpi-val.bad { color: var(--bad); }
+.kpi-val.ok { color: var(--ok); }
 
-/* ─── Findings Cards ─── */
-.finding-card {
+/* ─── Process Pipeline Stepper ─── */
+.stepper-bar {
+  display: flex;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-sm);
-  padding: 16px;
-  margin-bottom: 12px;
-  background: #ffffff;
-  transition: all 0.15s ease;
-}
-.finding-card.decided {
   background: #fafbfc;
-  opacity: 0.85;
+  margin-bottom: 18px;
+  overflow: hidden;
 }
-.finding-header {
+.step-item {
+  flex: 1;
+  padding: 9px 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--body);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-right: 1px solid var(--hairline);
+}
+.step-item:last-child { border-right: none; }
+.step-item.active {
+  background: #ffffff;
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: inset 0 -2px 0 var(--primary);
+}
+.step-num {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  background: #e2e5eb;
+  border-radius: 50%;
+  font-size: 10px;
+  margin-right: 6px;
+}
+.step-item.active .step-num {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ─── Case Pipeline Sidebar ─── */
+.search-input {
+  margin-bottom: 12px;
+  padding: 7px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+ul.cases {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+ul.cases li {
+  padding: 12px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: var(--canvas);
+}
+ul.cases li:hover {
+  background: #fafafa;
+  border-color: #d1d1d1;
+}
+ul.cases li[aria-current="true"] {
+  border-color: var(--primary);
+  background: #fcfcfc;
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+.case-id {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.case-meta {
+  color: var(--body);
+  font-size: 11.5px;
+  margin-top: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 10px;
 }
-.finding-title {
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1.5;
-  margin: 0 0 8px;
+.case-meta span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
-.original-wording {
-  font-size: 12px;
-  color: var(--body);
-  background: #f8fafc;
-  border-left: 3px solid #cbd5e1;
-  padding: 6px 10px;
-  margin: 8px 0;
-}
-.finding-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
+.case-meta .tag {
+  flex-shrink: 0;
+  margin: 0;
 }
 
-/* ─── Flag Legend ─── */
-.flag-legend {
-  margin-top: 20px;
-  padding: 12px 16px;
+/* ─── Badges & Tags (High-Precision Terminal System) ─── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2.5px 7px;
+  margin-right: 5px;
+  margin-bottom: 4px;
+  border-radius: var(--rounded-xs);
+  border: 1px solid var(--hairline);
+  background: #ffffff;
+  color: var(--ink);
+  line-height: 1.2;
+  vertical-align: middle;
+}
+.tag.status-open {
+  border-color: #334155;
+  color: #0f172a;
+  background: #f1f5f9;
+}
+.tag.status-under_review {
+  border-color: #fcd34d;
+  color: #92400e;
+  background: #fffbeb;
+}
+.tag.status-resolved {
+  border-color: #86efac;
+  color: #14532d;
+  background: #f0fdf4;
+}
+.tag.status-awaiting_info {
+  border-color: #cbd5e1;
+  color: #475569;
   background: #f8fafc;
+}
+.tag.calc {
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid #b91c1c;
+  color: #0f172a;
+  background: #f8fafc;
+  font-size: 9.5px;
+  padding: 2px 6px;
+}
+.tag.amb {
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid #d97706;
+  color: #0f172a;
+  background: #f8fafc;
+  font-size: 9.5px;
+  padding: 2px 6px;
+}
+.tag.stale {
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid #64748b;
+  color: #334155;
+  background: #f8fafc;
+  font-size: 9.5px;
+  padding: 2px 6px;
+}
+
+/* ─── Data Tables ─── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 12px 0;
+}
+th {
+  background: var(--hairline);
+  color: #333333;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 12px;
+  text-align: right;
+  border-bottom: 1px solid #dedede;
+}
+th:first-child, td:first-child { text-align: left; }
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--hairline);
+  text-align: right;
+}
+tr:hover td { background: #fbfbfd; }
+.bad { color: var(--bad); font-weight: 600; }
+.ok { color: var(--ok); font-weight: 500; }
+
+/* ─── Finding Cards ─── */
+.finding {
+  border: 1px solid var(--hairline);
+  border-left: 4px solid var(--body);
+  border-radius: var(--rounded-sm);
+  padding: 14px 18px;
+  margin: 12px 0;
+  background: var(--canvas);
+  transition: all 0.15s ease;
+}
+.finding:hover {
+  border-color: #d0d0d0;
+  border-left-color: var(--primary);
+}
+.finding.calculation_error {
+  border-left-color: var(--bad);
+  background: #fffdfd;
+}
+.finding.contract_ambiguity {
+  border-left-color: var(--warn);
+  background: #fffefa;
+}
+.finding-statement {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 9px 0;
+  color: #1a1a1a;
+}
+.cite {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--body);
+  margin-top: 6px;
+}
+.cite code {
+  background: #f2f4f7;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #24292e;
+}
+
+/* ─── Form Inputs ─── */
+input, textarea {
+  font-family: inherit;
+  font-size: 13.5px;
+  padding: 8.5px 12px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-sm);
-  font-size: 11.5px;
-  color: var(--body);
-}
-.flag-legend-title {
-  font-weight: 600;
+  background: var(--canvas);
   color: var(--ink);
-  margin-bottom: 6px;
+  width: 100%;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.flag-legend-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 6px;
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+}
+textarea {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  resize: vertical;
 }
 
-/* ─── Feedback & Messages ─── */
+/* ─── Floating Toast Notification ─── */
 #msg {
-  padding: 10px 16px;
+  position: sticky;
+  top: 16px;
+  padding: 12px 18px;
+  margin: 0 0 16px;
   border-radius: var(--rounded-sm);
-  font-size: 13px;
-  margin-bottom: 16px;
   display: none;
-}
-#msg.good {
-  display: block;
-  background: var(--ok-bg);
-  border: 1px solid var(--ok-border);
-  color: var(--ok);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  z-index: 100;
+  box-shadow: var(--shadow-float);
 }
 #msg.err {
   display: block;
-  background: var(--bad-bg);
-  border: 1px solid var(--bad-border);
+  background: #fff5f5;
   color: var(--bad);
+  border: 1px solid var(--bad);
+}
+#msg.good {
+  display: block;
+  background: #f0fdf4;
+  color: var(--ok);
+  border: 1px solid var(--ok);
 }
 
-.warning-banner {
-  background: var(--warn-bg);
-  border: 1px solid var(--warn-border);
-  color: var(--warn);
-  padding: 10px 14px;
-  border-radius: var(--rounded-sm);
-  font-size: 12.5px;
-  font-weight: 500;
-  margin-bottom: 14px;
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.muted { color: var(--body); font-size: 12.5px; }
+
+/* ─── Spinner ─── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
 }
 
-/* ─── Modal Dialog ─── */
-dialog {
-  border: 1px solid var(--hairline);
-  border-radius: 6px;
-  padding: 24px;
-  max-width: 480px;
-  width: 90%;
-  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+/* ─── Empty State ─── */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--body);
 }
-dialog::backdrop {
-  background: rgba(15, 23, 42, 0.4);
-}
-dialog h3 {
-  margin: 0 0 14px;
-  font-size: 16px;
+.empty-state svg {
+  width: 44px;
+  height: 44px;
+  stroke: #cccccc;
+  margin-bottom: 12px;
 }
 
-/* ─── Skeleton Loader ─── */
-.skeleton {
-  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 4px;
+/* ─── Terminal Wordmark Banner ─── */
+.footer-wordmark-banner {
+  margin-top: 60px;
+  padding: 36px 32px 48px;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+  overflow: hidden;
+  user-select: none;
+  background: #ffffff;
 }
-@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-/* Inputs */
-input, textarea {
-  font-family: inherit;
-  font-size: 13px;
-  padding: 8px 12px;
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-sm);
-  outline: none;
+.wordmark-text {
+  font-family: var(--font-sans);
+  font-size: clamp(48px, 11vw, 130px);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  color: #ebebeb;
+  text-transform: lowercase;
 }
-input:focus, textarea:focus {
-  border-color: var(--accent-cta);
+.footer-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #999999;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 14px;
 }
 </style>
 </head>
@@ -692,31 +695,75 @@ input:focus, textarea:focus {
 
 <a href="#main-content" class="skip">Skip to main content</a>
 
-<!-- ─── Compact Header (<=80px) ─── -->
-<header class="top-nav" role="banner">
-  <div class="brand-group">
-    <a href="/" class="brand-mark">
-      <div class="brand-gem"></div>
-      <span class="brand-name">Dispute Desk</span>
-    </a>
-    <span id="caseCount" class="top-badge">0 cases</span>
+<!-- ─── Top Brand Navigation Bar ─── -->
+<nav class="top-nav" role="navigation" aria-label="Global">
+  <a href="/" class="brand-mark">
+    <div class="brand-logo-gem"></div>
+    <span class="brand-name">Dispute Desk</span>
+  </a>
+  <div class="top-nav-meta">
+    <span><span class="live-pulse"></span>ENGINE: ONLINE</span>
+    <span>·</span>
+    <span>MATH: DETERMINISTIC (DECIMAL)</span>
   </div>
-  <div class="top-meta">
-    <span id="aiStatus" class="top-badge"><span class="pulse-dot"></span>AI: Checking...</span>
-    <button id="load" class="btn-top">Load sample case</button>
+</nav>
+
+<!-- ─── Hero Band (Dark #010120) with Signature Gradient Ribbon ─── -->
+<header class="hero-band" role="banner">
+  <div class="hero-inner">
+    <div>
+      <div class="mono-eyebrow">
+        <span>● MISSION CRITICAL RESOLUTION</span>
+        <span>·</span>
+        <span>PRODUCTION SPEC V1.0</span>
+      </div>
+      <h1 class="hero-title">Deterministic billing dispute resolution.</h1>
+      <p class="hero-lead">
+        Recalculating discrepancies with Decimal arithmetic. Multi-agent semantic interpretation grounded in contract citations, verified by human review.
+      </p>
+      <div class="hero-actions">
+        <button id="load" class="btn-mint">LOAD SAMPLE CASE</button>
+        <button id="guideBtn" class="btn-ghost-on-dark" style="color:#ffffff;">SYSTEM WORKFLOW</button>
+        <span class="mono-eyebrow mono-eyebrow-dark" style="margin-bottom:0">ZERO FLOAT DISCREPANCIES · IDEMPOTENT SETTLEMENT</span>
+      </div>
+    </div>
+    <div class="hero-ribbon-col">
+      <!-- Signature 3-color brand gradient ribbon SVG -->
+      <svg class="ribbon-svg" viewBox="0 0 460 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fc4c02" />
+            <stop offset="50%" stop-color="#ef2cc1" />
+            <stop offset="100%" stop-color="#bdbbff" />
+          </linearGradient>
+          <linearGradient id="brandGradSubtle" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ef2cc1" stop-opacity="0.4" />
+            <stop offset="100%" stop-color="#fc4c02" stop-opacity="0.1" />
+          </linearGradient>
+        </defs>
+        <path d="M20,180 C120,220 200,60 300,90 C380,114 410,30 440,50 C410,130 330,190 250,150 C170,110 90,190 20,180 Z" fill="url(#brandGradSubtle)" />
+        <path d="M10,150 C100,70 190,180 280,120 C360,60 400,140 450,90 C390,160 310,190 230,140 C150,90 80,190 10,150 Z" fill="url(#brandGrad)" opacity="0.9" />
+        <path d="M40,110 C140,40 210,150 310,80 C370,30 410,90 440,70" stroke="#c8f6f9" stroke-width="2" stroke-dasharray="4 4" opacity="0.6" />
+      </svg>
+    </div>
   </div>
 </header>
 
+<!-- ─── Main Technical Workspace ─── -->
 <main id="main-content">
   <!-- Sidebar -->
   <aside role="complementary" aria-label="Cases Pipeline">
     <div class="panel">
       <div class="panel-header">
-        <h2>Cases</h2>
+        <h2>Cases Pipeline</h2>
+        <span class="tag">AUDITED</span>
       </div>
-      <input type="text" id="caseSearch" class="search-input" placeholder="Filter by customer or ID..." aria-label="Filter cases">
-      <div id="emptyCases" class="muted" style="text-align:center;padding:24px 0;" hidden>
-        No cases found. Click "Load sample case".
+      <input type="text" id="caseSearch" class="search-input" placeholder="Filter cases by customer or ID..." aria-label="Filter cases">
+      <div id="emptyCases" class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+          <path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <p class="muted">No cases active.<br>Click "LOAD SAMPLE CASE" above.</p>
       </div>
       <ul class="cases" id="cases" role="list" aria-label="Dispute cases"></ul>
     </div>
@@ -726,98 +773,63 @@ input:focus, textarea:focus {
   <section role="main" aria-label="Investigation Console">
     <div id="msg" role="status" aria-live="polite"></div>
 
-    <!-- Collapsible "How this works" (Closed by default) -->
-    <details id="guideDetails" class="how-it-works">
-      <summary>How this works</summary>
+    <!-- Architecture & Workflow Guide Panel -->
+    <div id="guidePanel" class="panel" style="display:none;background:#fafbfc;border:1px solid var(--hairline);margin-bottom:20px;">
+      <div class="panel-header">
+        <h2>Dispute Desk - Architecture & How It Works</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">OPERATIONAL SPECIFICATION</span>
+      </div>
       <div class="guide-grid">
-        <div class="guide-col">
-          <div class="guide-col-title">1. Ingestion</div>
-          <p>Normalizes invoice lines, multi-tier pricing rules, meter usage logs, and customer statements into evidence v1.</p>
+        <div style="border:1px solid var(--hairline);padding:14px;background:#fff;border-radius:4px;">
+          <div class="mono-eyebrow" style="color:var(--ink);margin-bottom:6px;">1. INGESTION</div>
+          <p style="font-size:12.5px;line-height:1.5;color:var(--body);margin:0;">Normalizes invoice lines, multi-tier pricing rules, meter usage logs, and customer dispute statements into evidence v1.</p>
         </div>
-        <div class="guide-col">
-          <div class="guide-col-title">2. Deterministic Engine</div>
-          <p>Pure Python Decimal arithmetic recalculates exact tier charges, purges duplicate records, and filters out-of-period logs.</p>
+        <div style="border:1px solid var(--hairline);padding:14px;background:#fff;border-radius:4px;">
+          <div class="mono-eyebrow" style="color:var(--ink);margin-bottom:6px;">2. DETERMINISTIC ENGINE</div>
+          <p style="font-size:12.5px;line-height:1.5;color:var(--body);margin:0;">Python <code>Decimal</code> engine eliminates duplicate events by dedupe key, purges out-of-period logs, and recomputes exact tier charges.</p>
         </div>
-        <div class="guide-col">
-          <div class="guide-col-title">3. Grounded AI Citations</div>
-          <p>Synthesizes discrepancy narratives. Every finding must cite verified line, rule, and event IDs or it is discarded.</p>
+        <div style="border:1px solid var(--hairline);padding:14px;background:#fff;border-radius:4px;">
+          <div class="mono-eyebrow" style="color:var(--ink);margin-bottom:6px;">3. AI CITATIONS</div>
+          <p style="font-size:12.5px;line-height:1.5;color:var(--body);margin:0;">Claude AI synthesizes discrepancy narratives. Every finding must cite verified line, rule, and event IDs or it is discarded.</p>
         </div>
-        <div class="guide-col">
-          <div class="guide-col-title">4. Human Settlement</div>
-          <p>Reviewers audit findings. Approved credits are recorded with idempotency tokens and strictly capped by recalculated delta.</p>
+        <div style="border:1px solid var(--hairline);padding:14px;background:#fff;border-radius:4px;">
+          <div class="mono-eyebrow" style="color:var(--ink);margin-bottom:6px;">4. SETTLEMENT</div>
+          <p style="font-size:12.5px;line-height:1.5;color:var(--body);margin:0;">Human reviewer accepts or edits findings. Approved credits are recorded with idempotency tokens and strictly capped by recalculated delta.</p>
         </div>
       </div>
-    </details>
+    </div>
 
     <div id="detail">
-      <div class="panel" style="text-align:center;padding:48px 20px;">
-        <h3 style="margin:0 0 8px;font-size:16px;">No case selected</h3>
-        <p class="muted" style="margin:0 0 16px;">Select an existing case from the pipeline or load a sample case to begin investigation.</p>
-        <button id="loadFirstBtn" class="btn-primary">Load sample case</button>
+      <div class="panel empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+          <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+        </svg>
+        <p class="muted">Select a case or click "LOAD SAMPLE CASE" to begin investigation.</p>
       </div>
     </div>
   </section>
 </main>
 
-<!-- Credit Approval Dialog -->
-<dialog id="creditDialog" aria-labelledby="creditDialogTitle">
-  <h3 id="creditDialogTitle">Approve billing adjustment credit</h3>
-  <div id="creditDialogWarning"></div>
-  <div style="margin-bottom:14px;">
-    <label style="display:block;font-size:12px;font-weight:600;margin-bottom:4px;">Credit amount ($)</label>
-    <input id="amt" style="width:100%;font-size:14px;" aria-label="Credit amount">
-    <div class="muted" style="margin-top:4px;">Maximum creditable now: <span id="creditCap" style="font-weight:600;">$0.00</span></div>
-  </div>
-  <div style="margin-bottom:18px;">
-    <label style="display:block;font-size:12px;font-weight:600;margin-bottom:4px;">Reason for adjustment (required)</label>
-    <input id="why" placeholder="e.g., Deduplicated usage charges per SLA agreement" style="width:100%;" aria-label="Reason">
-  </div>
-  <div style="display:flex;justify-content:flex-end;gap:8px;">
-    <button id="cancelCreditBtn" class="btn-ghost" type="button">Cancel</button>
-    <button id="credit" class="btn-accent" type="button">Confirm & approve</button>
-  </div>
-</dialog>
+<!-- ─── Terminal Wordmark Banner ─── -->
+<footer class="footer-wordmark-banner">
+  <div class="wordmark-text">dispute.desk</div>
+  <div class="footer-sub">DETERMINISTIC BILLING AGENT · HIGH-PRECISION RESOLUTION SPECIFICATION · VERIFIED IDEMPOTENCY</div>
+</footer>
 
 <script>
 const $ = s => document.querySelector(s);
 let cur = null;
 let allCases = [];
-let activeTab = "comparison";
 
 const esc=s=>String(s ?? "").replace(/[&<>"']/g, c => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
 }[c]));
 
-// Display formatters (display-only, no arithmetic)
-const fmtMoney = v => {
-  if (v == null || v === "") return "$0.00";
-  const n = Number(String(v).replace(/[^0-9.-]/g, ""));
-  return isNaN(n) ? `$${v}` : new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
-};
-
-const fmtQty = v => {
-  if (v == null || v === "") return "0";
-  const n = Number(String(v).replace(/,/g, ""));
-  return isNaN(n) ? String(v) : new Intl.NumberFormat("en-US").format(n);
-};
-
-const humanStatus = s => ({
-  "open": "Open",
-  "under_review": "Under review",
-  "resolved": "Resolved",
-  "awaiting_info": "Awaiting info",
-  "reopened": "Reopened",
-  "proposed": "To review",
-  "accepted": "Accepted",
-  "edited": "Edited",
-  "rejected": "Rejected"
-}[s] || s);
-
 function say(t, ok) {
   const m = $("#msg");
   m.className = ok ? "good" : "err";
   m.textContent = t;
-  if (ok) setTimeout(() => { m.className = ""; }, 4000);
+  if (ok) setTimeout(() => { m.className = ""; }, 3800);
 }
 
 async function api(p, o = {}) {
@@ -849,31 +861,15 @@ async function guard(btn, fn) {
   }
 }
 
-async function checkHealth() {
-  try {
-    const h = await api("/health");
-    const el = $("#aiStatus");
-    if (h.ok && h.llm_configured) {
-      el.innerHTML = '<span class="pulse-dot"></span>AI: Connected';
-    } else {
-      el.innerHTML = '<span class="pulse-dot fallback"></span>AI: Rule-based fallback';
-    }
-  } catch {
-    $("#aiStatus").textContent = "AI: Offline";
-  }
-}
-
 function displayCases(cs) {
-  $("#caseCount").textContent = `${cs.length} case${cs.length === 1 ? "" : "s"}`;
   $("#emptyCases").hidden = cs.length > 0;
   $("#cases").innerHTML = cs.map(c => `
     <li tabindex="0" data-id="${esc(c.id)}" ${c.id === cur ? 'aria-current="true"' : ""}>
       <div class="case-id">${esc(c.id)}</div>
       <div class="case-meta">
-        <span class="case-customer">${esc(c.customer)}</span>
-        <span class="tag status-${esc(c.status)}">${esc(humanStatus(c.status))}</span>
+        <span>${esc(c.customer)}</span>
+        <span class="tag status-${esc(c.status)}">${esc(c.status)}</span>
       </div>
-      <div class="case-time">${new Date(c.created_at * 1000).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
     </li>
   `).join("");
 
@@ -900,509 +896,228 @@ $("#caseSearch").oninput = e => {
   displayCases(filtered);
 };
 
-async function handleLoadSample(btn) {
-  await guard(btn, async () => {
-    const existing = allCases.find(c => c.customer === "Acme Analytics Pvt Ltd");
-    if (existing) {
-      await open(existing.id);
-      say("Loaded existing sample case", 1);
-      return;
-    }
-    const p = await api("/sample");
-    const r = await api("/cases", { method: "POST", body: { payload: p } });
-    await loadCases();
-    await open(r.id);
-    say("Sample case initialized successfully", 1);
-  });
-}
-
-$("#load").onclick = e => handleLoadSample(e.target);
-const firstBtn = $("#loadFirstBtn");
-if (firstBtn) firstBtn.onclick = e => handleLoadSample(e.target);
+$("#load").onclick = e => guard(e.target, async () => {
+  const p = await api("/sample");
+  const r = await api("/cases", { method: "POST", body: { payload: p } });
+  await loadCases();
+  await open(r.id);
+  say("Sample case initialized successfully", 1);
+});
 
 async function open(id) {
   cur = id;
   await loadCases();
-  $("#detail").innerHTML = `
-    <div class="panel">
-      <div class="skeleton" style="height:24px;width:40%;margin-bottom:12px;"></div>
-      <div class="skeleton" style="height:14px;width:70%;margin-bottom:20px;"></div>
-      <div class="skeleton" style="height:120px;width:100%;"></div>
-    </div>
-  `;
-  try {
-    const d = await api("/cases/" + id);
-    render(d);
-  } catch (err) {
-    $("#detail").innerHTML = `
-      <div class="panel" style="text-align:center;padding:32px 20px;">
-        <p class="bad">Error loading case details: ${esc(err.message)}</p>
-        <button id="retryBtn" class="btn-ghost">Retry</button>
-      </div>
-    `;
-    const rBtn = $("#retryBtn");
-    if (rBtn) rBtn.onclick = () => open(id);
-  }
-}
-
-function highlightEvidence(citeId) {
-  activeTab = "evidence";
-  document.querySelectorAll(".tab-btn").forEach(b => {
-    const isActive = b.dataset.tab === "evidence";
-    b.classList.toggle("active", isActive);
-    b.setAttribute("aria-selected", isActive);
-  });
-  document.querySelectorAll(".tab-pane").forEach(p => {
-    p.classList.toggle("active", p.id === "tab-evidence");
-  });
-
-  const row = document.getElementById("ev-" + citeId);
-  if (row) {
-    row.scrollIntoView({ behavior: "smooth", block: "center" });
-    row.classList.remove("row-highlight");
-    void row.offsetWidth; // reflow
-    row.classList.add("row-highlight");
-  } else {
-    say(`Citation target ${citeId} located in evidence tables`, 1);
-  }
-}
-
-function makeAuditRows(decs, fList) {
-  return decs.map(x => {
-    let detailObj = {};
-    try { detailObj = JSON.parse(x.detail); } catch {}
-    let excerpt = x.detail;
-    if (detailObj.finding) {
-      const matchF = fList.find(item => item.id === detailObj.finding);
-      if (matchF) excerpt = `"${matchF.statement.slice(0, 75)}..."`;
-    }
-    const timeStr = new Date(x.created_at * 1000).toLocaleString(undefined, { timeZoneName: "short" });
-    const diffText = (detailObj.from && detailObj.to)
-      ? `Before: <i>"${esc(detailObj.from)}"</i> -> After: <i>"${esc(detailObj.to)}"</i>`
-      : esc(excerpt === "{}" ? "None" : excerpt);
-    return `
-      <tr>
-        <td style="white-space:nowrap;font-size:11.5px;">${timeStr}</td>
-        <td><b>${esc(x.actor)}</b></td>
-        <td><span class="tag">${esc(humanStatus(x.action))}</span></td>
-        <td style="font-size:12px;color:var(--body);">${diffText}</td>
-      </tr>
-    `;
-  }).join("");
+  const d = await api("/cases/" + id);
+  render(d);
 }
 
 function render(d) {
-  const c = d.calculation || d.calc, L = c ? c.lines : [], f = d.findings || [];
-  const p = d.current ? d.current.payload : {};
-  const inv = p.invoice || { lines: [] };
-  const rules = p.rules || [];
-  const usage = p.usage || [];
-  const auditRows = makeAuditRows(d.decisions, f);
+  const c = d.calculation || d.calc, L = c ? c.lines : [], f = d.findings;
 
-  // Determine unreviewed findings count
-  const unreviewedCount = (d.review && d.review.unreviewed != null) ? d.review.unreviewed : f.filter(x => x.status === "proposed").length;
+  const kpis = c ? `
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Original Billed</div>
+        <div class="kpi-val">$${esc(c.original_total)}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Recalculated Sum</div>
+        <div class="kpi-val">$${esc(c.recalculated_total)}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Net Overbilled</div>
+        <div class="kpi-val bad">-$${esc(c.overbilled)}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Creditable Now</div>
+        <div class="kpi-val ok">$${esc(c.creditable_now)}</div>
+      </div>
+    </div>
+  ` : "";
 
-  // Classify usage events into counted vs excluded
-  const seenDedupe = new Set();
-  const pStart = inv.period_start || "1970-01-01";
-  const pEnd = inv.period_end || "2099-12-31";
-  const classifiedUsage = usage.map(u => {
-    if (u.is_test) return { ...u, badge: "excluded: TEST_EVENT", isCounted: false };
-    if (u.date < pStart || u.date > pEnd) return { ...u, badge: "excluded: OUT_OF_PERIOD", isCounted: false };
-    const key = u.dedupe_key || u.id;
-    if (seenDedupe.has(key)) return { ...u, badge: "excluded: DUPLICATE_USAGE", isCounted: false };
-    seenDedupe.add(key);
-    return { ...u, badge: "counted", isCounted: true };
-  });
+  const stepper = `
+    <div class="stepper-bar">
+      <div class="step-item ${d.current ? "active" : ""}">
+        <span class="step-num">1</span>
+        <span>Evidence v${esc(d.current.version)}</span>
+      </div>
+      <div class="step-item ${c ? "active" : ""}">
+        <span class="step-num">2</span>
+        <span>Recalculation</span>
+      </div>
+      <div class="step-item ${f && f.length ? "active" : ""}">
+        <span class="step-num">3</span>
+        <span>Agent Findings (${f.length})</span>
+      </div>
+      <div class="step-item ${d.adjustments && d.adjustments.length ? "active" : ""}">
+        <span class="step-num">4</span>
+        <span>Settlement</span>
+      </div>
+    </div>
+  `;
 
-  const flagExpl = {
-    "QTY_MISMATCH": "Billed quantity exceeds valid verified usage logs.",
-    "RATE_MISMATCH": "Applied unit rate differs from contract pricing terms.",
-    "DUPLICATE_USAGE": "Duplicate meter event ignored via deduplication key.",
-    "OUT_OF_PERIOD": "Event timestamp falls outside invoice billing window.",
-    "AMBIGUOUS_RULE": "Contract clause is ambiguous; held for human legal review.",
-    "MISSING_USAGE": "No meter logs provided for this metric; held without adjustment."
-  };
-
-  // Group findings
-  const orderSeverity = { "calculation_error": 1, "contract_ambiguity": 2, "missing_evidence": 3 };
-  const sortedFindings = [...f].sort((a, b) => (orderSeverity[a.kind] || 9) - (orderSeverity[b.kind] || 9));
-  const groups = {
-    "To review": sortedFindings.filter(x => x.status === "proposed"),
-    "Accepted": sortedFindings.filter(x => x.status === "accepted"),
-    "Edited": sortedFindings.filter(x => x.status === "edited"),
-    "Rejected": sortedFindings.filter(x => x.status === "rejected")
-  };
+  const cmp = c ? `
+    <table>
+      <thead>
+        <tr>
+          <th>LINE</th>
+          <th>BILLED QTY</th>
+          <th>VALID QTY</th>
+          <th>BILLED</th>
+          <th>RECALCULATED</th>
+          <th>DELTA</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${L.map(l => `
+          <tr>
+            <td>
+              <div style="display:inline-flex;align-items:baseline;gap:6px;flex-wrap:wrap">
+                <b>${esc(l.line_id)}</b> <span>${esc(l.metric)}</span>
+                ${l.flags.map(x => `<span class="tag ${["AMBIGUOUS_RULE","MISSING_USAGE","CALC_ERROR"].includes(x) ? "amb" : "calc"}">${esc(x)}</span>`).join("")}
+              </div>
+            </td>
+            <td>${esc(l.billed_qty)}</td>
+            <td>${esc(l.correct_qty)}</td>
+            <td>${esc(l.billed_amount)}</td>
+            <td>${esc(l.correct_amount)}</td>
+            <td class="${+l.delta ? "bad" : "ok"}">${esc(l.delta)}</td>
+          </tr>
+        `).join("")}
+        <tr style="font-weight:600;border-top:2px solid var(--hairline)">
+          <td>TOTAL</td>
+          <td></td>
+          <td></td>
+          <td>${esc(c.original_total)}</td>
+          <td>${esc(c.recalculated_total)}</td>
+          <td class="bad">${esc(c.overbilled)}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="muted" style="margin-top:10px">
+      Calculated from evidence <b>v${c.evidence_version}</b> ·
+      Already credited: <b>${esc(c.already_credited)}</b> ·
+      ${+c.unresolved_ambiguous ? `<span class="tag amb">CONTRACT HELD: ${esc(c.unresolved_ambiguous)}</span> · ` : ""}
+      Credited in app: <b>${esc(c.credited_in_app)}</b> ·
+      Creditable now: <b style="color:var(--ok)">${esc(c.creditable_now)}</b>
+      ${c.partial ? ` · <span class="tag amb">PARTIAL: ${c.errors.map(esc).join(", ")}</span>` : ""}
+    </div>
+  ` : `<p class="muted">No calculation record. Click "Investigate" to trigger deterministic recalculation.</p>`;
 
   $("#detail").innerHTML = `
-    <!-- Case Overview Header -->
+    <!-- Case Overview Panel -->
     <div class="panel">
       <div class="panel-header">
         <div>
           <h2>${esc(d.case.id)} - ${esc(d.case.customer)}</h2>
-          <div class="muted" style="margin-top:4px">Status: <span class="tag status-${esc(d.case.status)}">${esc(humanStatus(d.case.status))}</span> · Evidence v${esc(d.current.version)}</div>
+          <div class="cite" style="margin-top:4px">STATUS: <span class="tag status-${esc(d.case.status)}">${esc(d.case.status)}</span> · EVIDENCE V${d.current.version}</div>
         </div>
         <div>
-          ${d.calc_stale ? '<span class="tag stale">Calculation stale - re-run investigation</span>' : ""}
+          ${d.calc_stale ? '<span class="tag stale">CALCULATION STALE - RE-RUN INVESTIGATION</span>' : ""}
         </div>
       </div>
-      <p style="font-size:14.5px;line-height:1.6;margin:0 0 16px;color:#1e293b;">${esc(d.current.payload.dispute_text)}</p>
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <button id="inv" class="btn-primary">${c ? "Re-run investigation" : "Investigate"}</button>
-        <span class="muted">Deterministic recalculation with grounded citations</span>
+      ${stepper}
+      <p style="font-size:15px;line-height:1.6;margin:0 0 16px;color:#222222;">${esc(d.current.payload.dispute_text)}</p>
+      <div class="row">
+        <button id="inv" class="btn-primary">${c ? "RE-RUN INVESTIGATION" : "INVESTIGATE"}</button>
+        <span class="muted">Executes state-graph: calculate -> interpret -> verify citations</span>
       </div>
     </div>
 
-    <!-- Navigation Tabs -->
-    <div class="tabs-nav" role="tablist">
-      <button class="tab-btn ${activeTab === 'comparison' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'comparison'}" data-tab="comparison">Comparison</button>
-      <button class="tab-btn ${activeTab === 'evidence' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'evidence'}" data-tab="evidence">Evidence</button>
-      <button class="tab-btn ${activeTab === 'findings' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'findings'}" data-tab="findings">Findings (${f.length})</button>
-      <button class="tab-btn ${activeTab === 'resolution' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'resolution'}" data-tab="resolution">Resolution</button>
-      <button class="tab-btn ${activeTab === 'audit' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'audit'}" data-tab="audit">Audit (${d.decisions.length})</button>
+    <!-- Invoice Recalculation Table & KPIs -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Original vs Recalculated Invoice</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">DETERMINISTIC DECIMAL MATH</span>
+      </div>
+      ${kpis}
+      ${cmp}
     </div>
 
-    <!-- TAB 1: Comparison -->
-    <div id="tab-comparison" class="tab-pane ${activeTab === 'comparison' ? 'active' : ''}">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Original vs recalculated invoice</h2>
-          <span class="tag">Deterministic math</span>
-        </div>
-        ${c ? `
-          <div class="kpi-grid">
-            <div class="kpi-card">
-              <div class="kpi-label">Original billed</div>
-              <div class="kpi-val">${fmtMoney(c.original_total)}</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Recalculated sum</div>
-              <div class="kpi-val">${fmtMoney(c.recalculated_total)}</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Net overbilled</div>
-              <div class="kpi-val bad">${fmtMoney(c.overbilled)}</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Creditable now</div>
-              <div class="kpi-val ok">${fmtMoney(c.creditable_now)}</div>
-            </div>
+    <!-- Agent Findings Panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Agent Findings & Citations</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">${f.length} FINDING${f.length === 1 ? "" : "S"}</span>
+      </div>
+      ${f.length ? f.map(x => `
+        <div class="finding ${esc(x.kind)} ${x.stale ? "stale" : ""}">
+          <div class="row">
+            <span class="tag ${x.kind === "calculation_error" ? "calc" : x.kind === "contract_ambiguity" ? "amb" : ""}">${esc(x.kind.replace("_", " "))}</span>
+            <span class="tag">${esc(x.source)}</span>
+            <span class="tag status-${esc(x.status)}">${esc(x.status)}</span>
+            ${x.stale ? '<span class="tag stale">STALE (v' + x.evidence_version + ')</span>' : ""}
           </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Line</th>
-                <th class="num">Billed quantity</th>
-                <th class="num">Valid quantity</th>
-                <th class="num">Billed amount</th>
-                <th class="num">Recalculated amount</th>
-                <th class="num">Difference</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${L.map(l => `
-                <tr>
-                  <td>
-                    <div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">
-                      <b>${esc(l.line_id)}</b> <span>${esc(l.metric)}</span>
-                      ${l.flags.map(x => `
-                        <span class="tag ${['AMBIGUOUS_RULE','MISSING_USAGE','CALC_ERROR'].includes(x) ? 'amb' : 'calc'}" title="${esc(flagExpl[x] || x)}">${esc(x)}</span>
-                      `).join("")}
-                    </div>
-                  </td>
-                  <td class="num">${fmtQty(l.billed_qty)}</td>
-                  <td class="num">${fmtQty(l.correct_qty)}</td>
-                  <td class="num">${fmtMoney(l.billed_amount)}</td>
-                  <td class="num">${fmtMoney(l.correct_amount)}</td>
-                  <td class="num ${+l.delta ? 'bad' : 'ok'}">${+l.delta > 0 ? '+' : ''}${fmtMoney(l.delta)}</td>
-                </tr>
-              `).join("")}
-              <tr style="font-weight:700;border-top:2px solid var(--hairline)">
-                <td>Total</td>
-                <td></td>
-                <td></td>
-                <td class="num">${fmtMoney(c.original_total)}</td>
-                <td class="num">${fmtMoney(c.recalculated_total)}</td>
-                <td class="num bad">${fmtMoney(c.overbilled)}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="muted" style="margin-top:12px">
-            Calculated from evidence <b>v${esc(c.evidence_version)}</b> ·
-            Credited so far: <b>${fmtMoney(c.credited_in_app || c.already_credited)}</b> ·
-            Creditable now: <b style="color:var(--ok)">${fmtMoney(c.creditable_now)}</b>
-            ${+c.unresolved_ambiguous ? ` · <span class="tag amb">Contract held: ${fmtMoney(c.unresolved_ambiguous)}</span>` : ""}
+          <div class="finding-statement">${esc(x.statement)}</div>
+          <div class="cite">CITATIONS: ${x.citations.map(c => `<code>${esc(c)}</code>`).join(", ")}</div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn-ghost" data-a="accepted" data-f="${esc(x.id)}">ACCEPT</button>
+            <button class="btn-ghost" data-a="edited" data-f="${esc(x.id)}" data-s="${esc(x.statement)}">EDIT</button>
+            <button class="btn-ghost" data-a="rejected" data-f="${esc(x.id)}">REJECT</button>
           </div>
+        </div>
+      `).join("") : '<p class="muted">No findings yet. Run investigation to produce cited findings.</p>'}
+    </div>
 
-          <div class="flag-legend">
-            <div class="flag-legend-title">Discrepancy flag guide</div>
-            <div class="flag-legend-grid">
-              <div><b>QTY_MISMATCH:</b> Billed units exceed valid usage logs.</div>
-              <div><b>RATE_MISMATCH:</b> Line rate does not match agreed pricing.</div>
-              <div><b>DUPLICATE_USAGE:</b> Repeated event ignored by deduplication key.</div>
-              <div><b>OUT_OF_PERIOD:</b> Logged date outside billing window.</div>
-              <div><b>AMBIGUOUS_RULE:</b> Contract clause wording requires human review.</div>
-              <div><b>MISSING_USAGE:</b> No usage logs supplied; held without adjustment.</div>
-            </div>
-          </div>
-        ` : `
-          <p class="muted">No calculation performed yet. Click "Investigate" to run deterministic recalculation.</p>
-        `}
+    <!-- Resolution & Mock Credit -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Settlement Resolution</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">IDEMPOTENT DISBURSEMENT</span>
+      </div>
+      <div class="row" style="margin-bottom:12px">
+        <input id="amt" style="width:140px" aria-label="Credit amount" value="${c ? esc(c.creditable_now) : "0.00"}">
+        <input id="why" placeholder="Reason for adjustment (required)" aria-label="Reason" style="flex:1">
+        <button id="credit" class="btn-primary">APPROVE CREDIT</button>
+        <button id="ask" class="btn-ghost">REQUEST INFO</button>
+      </div>
+      <p class="muted" style="margin-bottom:14px">Guarantees: Duplicate requests are ignored via idempotency tokens; credits exceeding overbilling are blocked.</p>
+      ${d.adjustments.map(a => `
+        <div class="ok" style="font-family:var(--font-mono);font-size:12px;margin-top:6px;">
+          ✓ APPROVED ${esc(a.id)}: $${esc(a.amount)} (Evidence v${a.evidence_version})
+          ${a.stale ? '<span class="tag stale">APPROVED ON PRIOR EVIDENCE</span>' : ""}
+        </div>
+      `).join("")}
+    </div>
+
+    <!-- Add Evidence Patch -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Inject Evidence</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">RE-OPENS CASE & MARKS STALE</span>
+      </div>
+      <textarea id="patch" rows="3" aria-label="Evidence JSON" placeholder='{"usage":[{"id":"U9","metric":"api_calls","quantity":"1000","date":"2026-09-12"}]}'></textarea>
+      <div class="row" style="margin-top:10px">
+        <input id="note" placeholder="Evidence note (e.g., revised gateway server log export)" style="flex:1">
+        <button id="addev" class="btn-primary">ADD EVIDENCE</button>
       </div>
     </div>
 
-    <!-- TAB 2: Evidence -->
-    <div id="tab-evidence" class="tab-pane ${activeTab === 'evidence' ? 'active' : ''}">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Invoice lines</h2>
-          <span class="muted">Invoice ID: ${esc(inv.id || 'N/A')}</span>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Line ID</th>
-              <th>Metric</th>
-              <th class="num">Billed quantity</th>
-              <th class="num">Billed amount</th>
-              <th>Rule reference</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${(inv.lines || []).map(l => `
-              <tr id="ev-${esc(l.id)}">
-                <td><b>${esc(l.id)}</b></td>
-                <td>${esc(l.metric)}</td>
-                <td class="num">${fmtQty(l.quantity)}</td>
-                <td class="num">${fmtMoney(l.amount)}</td>
-                <td><code>${esc(l.rule_id)}</code></td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
+    <!-- Audit Decision Trail -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Audit Decision Trail</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">APPEND-ONLY AUDIT LOG</span>
       </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Contract rules</h2>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Rule ID</th>
-              <th>Pricing type</th>
-              <th>Details & terms</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${rules.map(r => `
-              <tr id="ev-${esc(r.id)}">
-                <td><b>${esc(r.id)}</b></td>
-                <td><span class="tag">${esc(r.type)}</span></td>
-                <td>${esc(r.text || '')}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Metered usage logs</h2>
-          <span class="muted">${classifiedUsage.length} events logged</span>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Event ID</th>
-              <th>Metric</th>
-              <th class="num">Quantity</th>
-              <th>Date</th>
-              <th>Deduplication key</th>
-              <th>Audit status</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${classifiedUsage.map(u => `
-              <tr id="ev-${esc(u.id)}">
-                <td><b>${esc(u.id)}</b></td>
-                <td>${esc(u.metric)}</td>
-                <td class="num">${fmtQty(u.quantity)}</td>
-                <td>${esc(u.date)}</td>
-                <td><code>${esc(u.dedupe_key || '-')}</code></td>
-                <td><span class="tag ${u.isCounted ? 'counted' : 'excluded'}">${esc(u.badge)}</span></td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Evidence version history</h2>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Version</th>
-              <th>SHA-256 Hash</th>
-              <th>Submission note</th>
-              <th>Created at</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${(d.evidence || []).map(e => `
-              <tr>
-                <td><b>v${esc(e.version)}</b></td>
-                <td><code>${esc((e.hash || '').slice(0, 16))}</code></td>
-                <td>${esc(e.note || '')}</td>
-                <td>${new Date(e.created_at * 1000).toLocaleString()}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Inject new evidence</h2>
-          <span class="tag stale">Marks prior findings stale</span>
-        </div>
-        <textarea id="patch" rows="3" style="width:100%;margin-bottom:10px;" aria-label="Evidence JSON" placeholder='{"usage":[{"id":"U9","metric":"api_calls","quantity":"1000","date":"2026-09-12"}]}'></textarea>
-        <div style="display:flex;gap:10px;">
-          <input id="note" placeholder="Evidence note (e.g., revised gateway server log export)" style="flex:1" aria-label="Evidence note">
-          <button id="addev" class="btn-primary">Add evidence</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 3: Findings -->
-    <div id="tab-findings" class="tab-pane ${activeTab === 'findings' ? 'active' : ''}">
-      ${f.length === 0 ? `
-        <div class="panel" style="text-align:center;padding:36px;">
-          <p class="muted">No findings generated yet. Run investigation to produce cited findings.</p>
-        </div>
-      ` : Object.entries(groups).map(([grpName, grpItems]) => grpItems.length ? `
-        <div class="panel">
-          <div class="panel-header">
-            <h2>${esc(grpName)} (${grpItems.length})</h2>
+      <div style="font-family:var(--font-mono);font-size:12px;line-height:1.7;">
+        ${d.decisions.map(x => `
+          <div class="muted">
+            <span style="color:#222">${new Date(x.created_at * 1000).toISOString().replace("T", " ").slice(0, 19)}</span>
+            · <b>${esc(x.actor)}</b>
+            · <span style="color:#000">${esc(x.action)}</span>
+            ${esc(x.detail === "{}" ? "" : x.detail)}
           </div>
-          ${grpItems.map(x => {
-            const isDecided = x.status !== "proposed";
-            return `
-              <div class="finding-card ${isDecided ? 'decided' : ''}">
-                <div class="finding-header">
-                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                    <span class="tag ${x.kind === 'calculation_error' ? 'calc' : 'amb'}">${esc(x.kind.replace('_', ' '))}</span>
-                    <span class="tag">${x.source === 'rules' ? 'Deterministic rule' : 'AI'}</span>
-                    <span class="tag status-${esc(x.status)}">${esc(humanStatus(x.status))}</span>
-                    ${x.stale ? '<span class="tag stale">Stale (v' + esc(x.evidence_version) + ')</span>' : ''}
-                  </div>
-                </div>
-                <div class="finding-title">${esc(x.statement)}</div>
-                ${x.original_statement && x.original_statement !== x.statement ? `
-                  <div class="original-wording"><b>Original wording:</b> "${esc(x.original_statement)}"</div>
-                ` : ''}
-                <div style="margin-top:8px;">
-                  <span class="muted" style="margin-right:6px;">Citations:</span>
-                  ${x.citations.map(cId => `
-                    <button class="cite-btn" data-cite="${esc(cId)}" type="button"><code>${esc(cId)}</code></button>
-                  `).join("")}
-                </div>
-                <div class="finding-actions">
-                  ${!isDecided ? `
-                    <button class="btn-ghost" data-a="accepted" data-f="${esc(x.id)}">Accept</button>
-                    <button class="btn-ghost" data-a="edited" data-f="${esc(x.id)}" data-s="${esc(x.statement)}">Edit</button>
-                    <button class="btn-ghost" data-a="rejected" data-f="${esc(x.id)}">Reject</button>
-                  ` : `
-                    <button class="btn-ghost" data-a="proposed" data-f="${esc(x.id)}">Undo / change decision</button>
-                  `}
-                </div>
-              </div>
-            `;
-          }).join("")}
-        </div>
-      ` : "").join("")}
-    </div>
-
-    <!-- TAB 4: Resolution -->
-    <div id="tab-resolution" class="tab-pane ${activeTab === 'resolution' ? 'active' : ''}">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Settlement resolution</h2>
-          <span class="tag">Idempotent disbursement</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
-          <button id="openCreditModal" class="btn-accent" ${d.calc_stale ? 'disabled title="Calculation is stale"' : ''}>Approve credit</button>
-          <button id="ask" class="btn-ghost">Request information</button>
-          ${d.calc_stale ? '<span class="tag stale">Calculation is stale; re-run investigation first</span>' : ''}
-        </div>
-        <p class="muted">Approved credits are strictly bounded by deterministic overbilling delta and protected against duplicate clicks via idempotency tokens.</p>
-
-        <h3 style="font-size:14px;margin:20px 0 10px;">Approved credit ledger</h3>
-        ${d.adjustments.length ? d.adjustments.map(a => `
-          <div style="font-family:var(--font-mono);font-size:12px;padding:8px 12px;background:#f8fafc;border:1px solid var(--hairline);border-radius:4px;margin-bottom:6px;">
-            ✓ <b>APPROVED ${esc(a.id)}:</b> ${fmtMoney(a.amount)} (Evidence v${esc(a.evidence_version)}) · Reason: "${esc(a.reason || 'None provided')}"
-            ${a.stale ? '<span class="tag stale">Approved on prior evidence</span>' : ''}
-          </div>
-        `).join("") : '<p class="muted">No credit adjustments approved yet.</p>'}
-      </div>
-    </div>
-
-    <!-- TAB 5: Audit -->
-    <div id="tab-audit" class="tab-pane ${activeTab === 'audit' ? 'active' : ''}">
-      <div class="panel">
-        <div class="panel-header">
-          <h2>Audit log trail</h2>
-          <span class="muted">${d.decisions.length} recorded events</span>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Timestamp</th>
-              <th>Actor</th>
-              <th>Action</th>
-              <th>Activity detail</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${auditRows}
-          </tbody>
-        </table>
+        `).join("")}
       </div>
     </div>
   `;
 
-  // Tab switching logic
-  document.querySelectorAll(".tab-btn").forEach(btn => {
-    btn.onclick = () => {
-      activeTab = btn.dataset.tab;
-      document.querySelectorAll(".tab-btn").forEach(b => {
-        const isActive = b.dataset.tab === activeTab;
-        b.classList.toggle("active", isActive);
-        b.setAttribute("aria-selected", isActive);
-      });
-      document.querySelectorAll(".tab-pane").forEach(p => {
-        p.classList.toggle("active", p.id === "tab-" + activeTab);
-      });
-    };
-  });
-
-  // Citation jump buttons
-  document.querySelectorAll(".cite-btn").forEach(b => {
-    b.onclick = () => highlightEvidence(b.dataset.cite);
-  });
-
-  // Investigation trigger
   $("#inv").onclick = e => guard(e.target, async () => {
     const r = await api(`/cases/${cur}/investigate`, { method: "POST" });
     say(r.ok ? `Investigation complete (${r.llm_used ? "Claude AI" : "Rule-based fallback"}${r.llm_error ? " - " + r.llm_error : ""})` : "Calculation failed: " + r.error, r.ok);
     await open(cur);
   });
 
-  // Finding status buttons (Accept, Edit, Reject, Undo)
   document.querySelectorAll("[data-a]").forEach(b => b.onclick = () => guard(b, async () => {
     let s;
     if (b.dataset.a === "edited") {
@@ -1413,50 +1128,21 @@ function render(d) {
       method: "POST",
       body: { status: b.dataset.a, statement: s }
     });
-    say(`Finding decision recorded: ${humanStatus(b.dataset.a)}`, 1);
     await open(cur);
   }));
 
-  // Settlement Dialog open
-  const modalBtn = $("#openCreditModal");
-  if (modalBtn) {
-    modalBtn.onclick = () => {
-      const cap = c ? c.creditable_now : "0.00";
-      $("#amt").value = cap;
-      $("#creditCap").textContent = fmtMoney(cap);
-      const warnEl = $("#creditDialogWarning");
-      if (unreviewedCount > 0) {
-        warnEl.innerHTML = `<div class="warning-banner">⚠️ Note: ${unreviewedCount} finding${unreviewedCount === 1 ? '' : 's'} still unreviewed. Proceeding will settle based on current recalculation.</div>`;
-      } else {
-        warnEl.innerHTML = "";
-      }
-      $("#creditDialog").showModal();
-    };
-  }
-
-  // Cancel settlement
-  $("#cancelCreditBtn").onclick = () => $("#creditDialog").close();
-
-  // Approve credit submission
   $("#credit").onclick = e => guard(e.target, async () => {
-    const amtVal = $("#amt").value.trim();
-    const reasonVal = $("#why").value.trim();
-    if (!reasonVal) {
-      say("A reason for credit adjustment is required");
-      return;
-    }
+    const amtVal = $("#amt").value;
     const key = sessionStorage.getItem("k" + cur + amtVal) || ("ui-" + crypto.randomUUID());
     sessionStorage.setItem("k" + cur + amtVal, key);
     const r = await api(`/cases/${cur}/credit`, {
       method: "POST",
-      body: { amount: amtVal, reason: reasonVal, idempotency_key: key }
+      body: { amount: amtVal, reason: $("#why").value, idempotency_key: key }
     });
-    $("#creditDialog").close();
-    say(r.status === "approved" ? `✓ Credit approved: ${esc(r.id)} (${fmtMoney(amtVal)} logged to ledger)` : "Duplicate request ignored - idempotency key recognized", 1);
+    say(r.status === "approved" ? "Credit approved and logged to ledger" : "Duplicate request ignored - idempotency key recognized", 1);
     await open(cur);
   });
 
-  // Request Info
   $("#ask").onclick = e => guard(e.target, async () => {
     const q = prompt("Enter specific inquiry to customer:");
     if (!q) return;
@@ -1465,22 +1151,24 @@ function render(d) {
     await open(cur);
   });
 
-  // Add Evidence
   $("#addev").onclick = e => guard(e.target, async () => {
-    let patch;
+    let p;
     try {
-      patch = JSON.parse($("#patch").value);
+      p = JSON.parse($("#patch").value);
     } catch {
       throw new Error("Invalid JSON: please ensure evidence patch is valid JSON syntax");
     }
-    await api(`/cases/${cur}/evidence`, { method: "POST", body: { patch, note: $("#note").value } });
+    await api(`/cases/${cur}/evidence`, { method: "POST", body: { patch: p, note: $("#note").value } });
     say("Evidence patch accepted - prior conclusions marked stale", 1);
     await open(cur);
   });
 }
 
-// Global init
-checkHealth();
+$("#guideBtn").onclick = () => {
+  const p = $("#guidePanel");
+  p.style.display = p.style.display === "none" ? "block" : "none";
+};
+
 loadCases().catch(e => say(e.message));
 </script>
 </body>
