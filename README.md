@@ -1,4 +1,4 @@
-# Dispute Desk — Billing Dispute Investigation & Resolution Agent
+# Dispute Desk - Billing Dispute Investigation & Resolution Agent
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg)](https://fastapi.tiangolo.com)
@@ -8,7 +8,7 @@
 
 Autonomous billing dispute investigation agent with **deterministic recalculation**, **grounded AI interpretation**, and **human-in-the-loop settlement approval**.
 
-All mathematical computations and monetary ledgers execute in pure Python using fixed-point `Decimal` arithmetic — zero floating-point discrepancies. An LLM (Claude Sonnet) is strictly confined to semantic interpretation and contextual narrative; every finding must cite verified evidence IDs or it is deterministically discarded.
+All mathematical computations and monetary ledgers execute in pure Python using fixed-point `Decimal` arithmetic - zero floating-point discrepancies. An LLM (Claude Sonnet) is strictly confined to semantic interpretation and contextual narrative; every finding must cite verified evidence IDs or it is deterministically discarded.
 
 ---
 

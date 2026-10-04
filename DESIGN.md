@@ -1,4 +1,4 @@
-# DESIGN.md — Dispute Desk Design System
+# DESIGN.md - Dispute Desk Design System
 
 > Built following the **Together AI / VoltAgent** design system and **Egonex-AI / addyosmani** agent engineering specifications.
 
@@ -6,7 +6,7 @@
 
 ## 1. Overview & System Philosophy
 
-Dispute Desk is a mission-critical billing dispute investigation platform — deterministic recalculation, agentic interpretation, and human approval. The brand and visual language project an uncompromising posture of precision, transparency, and high-performance infrastructure:
+Dispute Desk is a mission-critical billing dispute investigation platform: deterministic recalculation, agentic interpretation, and human approval. The brand and visual language project an uncompromising posture of precision, transparency, and high-performance infrastructure:
 
 - **Near-black hero on top (`#010120`)**: Anchor of seriousness and operational authority.
 - **Three-color brand gradient ribbon (`#fc4c02` → `#ef2cc1` → `#bdbbff`)**: The signature brand chrome representing data transformation, from raw metrics to resolved consensus.
@@ -153,5 +153,5 @@ Following the Together AI typographic rules:
 ### Don't
 - Never let an LLM perform mathematical arithmetic or set credit caps.
 - Never write paragraphs in all-caps monospace. Monospace is strictly for metadata, labels, and citations.
-- Never use heavy drop shadows on light surfaces — maintain clean hairlines.
+- Never use heavy drop shadows on light surfaces - maintain clean hairlines.
 - Never omit citations when generating or validating findings.

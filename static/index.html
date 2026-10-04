@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Together AI-grade billing dispute investigation and resolution infrastructure. Deterministic recalculation with AI interpretation and human approval.">
-<title>Dispute Desk — Deterministic Billing Resolution</title>
+<title>Dispute Desk - Deterministic Billing Resolution</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -737,7 +737,7 @@ textarea {
     <!-- Architecture & Workflow Guide Panel -->
     <div id="guidePanel" class="panel" style="display:none;background:#fafbfc;border:1px solid var(--hairline);margin-bottom:20px;">
       <div class="panel-header">
-        <h2>Dispute Desk — Architecture & How It Works</h2>
+        <h2>Dispute Desk - Architecture & How It Works</h2>
         <span class="mono-eyebrow mono-eyebrow-dark">OPERATIONAL SPECIFICATION</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;">
@@ -968,11 +968,11 @@ function render(d) {
     <div class="panel">
       <div class="panel-header">
         <div>
-          <h2>${esc(d.case.id)} — ${esc(d.case.customer)}</h2>
+          <h2>${esc(d.case.id)} - ${esc(d.case.customer)}</h2>
           <div class="cite" style="margin-top:4px">STATUS: <span class="tag status-${esc(d.case.status)}">${esc(d.case.status)}</span> · EVIDENCE V${d.current.version}</div>
         </div>
         <div>
-          ${d.calc_stale ? '<span class="tag stale">CALCULATION STALE — RE-RUN INVESTIGATION</span>' : ""}
+          ${d.calc_stale ? '<span class="tag stale">CALCULATION STALE - RE-RUN INVESTIGATION</span>' : ""}
         </div>
       </div>
       ${stepper}
@@ -1073,7 +1073,7 @@ function render(d) {
 
   $("#inv").onclick = e => guard(e.target, async () => {
     const r = await api(`/cases/${cur}/investigate`, { method: "POST" });
-    say(r.ok ? `Investigation complete (${r.llm_used ? "Claude AI" : "Rule-based fallback"}${r.llm_error ? " — " + r.llm_error : ""})` : "Calculation failed: " + r.error, r.ok);
+    say(r.ok ? `Investigation complete (${r.llm_used ? "Claude AI" : "Rule-based fallback"}${r.llm_error ? " - " + r.llm_error : ""})` : "Calculation failed: " + r.error, r.ok);
     await open(cur);
   });
 
@@ -1098,7 +1098,7 @@ function render(d) {
       method: "POST",
       body: { amount: amtVal, reason: $("#why").value, idempotency_key: key }
     });
-    say(r.status === "approved" ? "Credit approved and logged to ledger" : "Duplicate request ignored — idempotency key recognized", 1);
+    say(r.status === "approved" ? "Credit approved and logged to ledger" : "Duplicate request ignored - idempotency key recognized", 1);
     await open(cur);
   });
 
@@ -1118,7 +1118,7 @@ function render(d) {
       throw new Error("Invalid JSON: please ensure evidence patch is valid JSON syntax");
     }
     await api(`/cases/${cur}/evidence`, { method: "POST", body: { patch: p, note: $("#note").value } });
-    say("Evidence patch accepted — prior conclusions marked stale", 1);
+    say("Evidence patch accepted - prior conclusions marked stale", 1);
     await open(cur);
   });
 }

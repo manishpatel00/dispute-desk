@@ -2,7 +2,7 @@
 
 **Tools:** Google Antigravity IDE, Claude / Anthropic API, pytest as the verification loop, uvicorn, git, and GitHub CLI.
 
-**Research inputs reviewed:** addyosmani/agent-skills (spec → plan → build → verify → review workflow, TDD, security/observability checklists), VoltAgent/awesome-design-md (DESIGN.md architecture and state modeling), Egonex-AI/Understand-Anything (deterministic parse + LLM semantics split — borrowed as the "deterministic facts, LLM meaning" principle), Owl-Listener/designer-skills (error-flow / state-mapping guidance for the UI states).
+**Research inputs reviewed:** addyosmani/agent-skills (spec -> plan -> build -> verify -> review workflow, TDD, security/observability checklists), VoltAgent/awesome-design-md (DESIGN.md architecture and state modeling), Egonex-AI/Understand-Anything (deterministic parse + LLM semantics split - borrowed as the "deterministic facts, LLM meaning" principle), Owl-Listener/designer-skills (error-flow / state-mapping guidance for the UI states).
 
 **Representative prompts**
 1. "Pick the best of two assessment problems, then design a deterministic billing engine + agent graph where the LLM can never change money."
