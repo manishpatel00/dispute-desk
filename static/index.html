@@ -200,6 +200,8 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
+  margin-right: 6px;
+  margin-bottom: 4px;
 }
 button:focus-visible {
   outline: 2px solid var(--accent-magenta);
@@ -358,13 +360,14 @@ main {
 }
 .step-num {
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
   text-align: center;
   background: #e2e5eb;
   border-radius: 50%;
-  font-size: 9.5px;
+  font-size: 10px;
+  margin-right: 6px;
 }
 .step-item.active .step-num {
   background: var(--primary);
@@ -423,7 +426,9 @@ ul.cases li[aria-current="true"] {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 2.5px 8px;
+  padding: 3px 8px;
+  margin-right: 6px;
+  margin-bottom: 4px;
   border-radius: var(--rounded-sm);
   border: 1px solid var(--hairline);
   background: #ffffff;
@@ -661,8 +666,6 @@ textarea {
     <span><span class="live-pulse"></span>ENGINE: ONLINE</span>
     <span>·</span>
     <span>MATH: DETERMINISTIC (DECIMAL)</span>
-    <span>·</span>
-    <span>AI: ANTHROPIC CLAUDE</span>
   </div>
 </nav>
 
@@ -681,6 +684,7 @@ textarea {
       </p>
       <div class="hero-actions">
         <button id="load" class="btn-mint">LOAD SAMPLE CASE</button>
+        <button id="guideBtn" class="btn-ghost-on-dark" style="color:#ffffff;">SYSTEM WORKFLOW</button>
         <span class="mono-eyebrow mono-eyebrow-dark" style="margin-bottom:0">ZERO FLOAT DISCREPANCIES · IDEMPOTENT SETTLEMENT</span>
       </div>
     </div>
@@ -729,6 +733,33 @@ textarea {
   <!-- Detail Area -->
   <section role="main" aria-label="Investigation Console">
     <div id="msg" role="status" aria-live="polite"></div>
+
+    <!-- Architecture & Workflow Guide Panel -->
+    <div id="guidePanel" class="panel" style="display:none;background:#fafbfc;border:1px solid var(--hairline);margin-bottom:20px;">
+      <div class="panel-header">
+        <h2>Dispute Desk — Architecture & How It Works</h2>
+        <span class="mono-eyebrow mono-eyebrow-dark">OPERATIONAL SPECIFICATION</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;">
+        <div style="border:1px solid var(--hairline);padding:14px;background:#fff;border-radius:4px;">
+          <div class="mono-eyebrow" style="color:var(--ink);margin-bottom:6px;">1. INGESTION</div>
+          <p style="font-size:12.5px;line-height:1.5;color:var(--body);margin:0;">Normalizes invoice lines, multi-tier pricing rules, meter usage logs, and customer dispute statements into evidence v1.</p>
+        </div>
+        <div style="border:1px solid var(--hairline);padding:14px;background:#fff;border-radius:4px;">
+          <div class="mono-eyebrow" style="color:var(--ink);margin-bottom:6px;">2. DETERMINISTIC ENGINE</div>
+          <p style="font-size:12.5px;line-height:1.5;color:var(--body);margin:0;">Python <code>Decimal</code> engine eliminates duplicate events by dedupe key, purges out-of-period logs, and recomputes exact tier charges.</p>
+        </div>
+        <div style="border:1px solid var(--hairline);padding:14px;background:#fff;border-radius:4px;">
+          <div class="mono-eyebrow" style="color:var(--ink);margin-bottom:6px;">3. AI CITATIONS</div>
+          <p style="font-size:12.5px;line-height:1.5;color:var(--body);margin:0;">Claude AI synthesizes discrepancy narratives. Every finding must cite verified line, rule, and event IDs or it is discarded.</p>
+        </div>
+        <div style="border:1px solid var(--hairline);padding:14px;background:#fff;border-radius:4px;">
+          <div class="mono-eyebrow" style="color:var(--ink);margin-bottom:6px;">4. SETTLEMENT</div>
+          <p style="font-size:12.5px;line-height:1.5;color:var(--body);margin:0;">Human reviewer accepts or edits findings. Approved credits are recorded with idempotency tokens and strictly capped by recalculated delta.</p>
+        </div>
+      </div>
+    </div>
+
     <div id="detail">
       <div class="panel empty-state">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
@@ -1091,6 +1122,11 @@ function render(d) {
     await open(cur);
   });
 }
+
+$("#guideBtn").onclick = () => {
+  const p = $("#guidePanel");
+  p.style.display = p.style.display === "none" ? "block" : "none";
+};
 
 loadCases().catch(e => say(e.message));
 </script>

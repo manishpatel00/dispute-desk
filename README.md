@@ -144,6 +144,8 @@ During development, aggressive adversarial probing surfaced 12 critical real-wor
 
 ## Production Deployment
 
+**Live Hosted Application:** [https://dispute-desk-xnbf.onrender.com/](https://dispute-desk-xnbf.onrender.com/)
+
 ### Automated Blueprint (Render)
 
 The application includes an automated [Render Blueprint specification](render.yaml) (`render.yaml`).
@@ -159,7 +161,7 @@ The application includes an automated [Render Blueprint specification](render.ya
 
 ### Reviewer Walkthrough Steps
 
-1. Open the hosted service URL.
+1. Open the live service: [https://dispute-desk-xnbf.onrender.com/](https://dispute-desk-xnbf.onrender.com/).
 2. Click **"LOAD SAMPLE CASE"** to populate the dispute pipeline.
 3. Click **"INVESTIGATE"** to execute the multi-stage recalculation and semantic analysis.
 4. Review the **Original vs Recalculated Invoice** comparison table ($500.00 discrepancy detected).
